@@ -388,6 +388,92 @@ namespace Harjoitukset1
             }
         }
 
+        /// <summary>
+        /// Assignment 11
+        /// Tee kahden sisäkkäisen for-silmukan avulla ohjelma, joka tulostaa seuraavanlaisen kuvion:
+        /// *
+        /// **
+        /// ***
+        /// ****
+        /// *****
+        /// </summary>
+        private static void assignment11()
+        {
+            Console.WriteLine("Anna luku >");
+            int number = 0;
+            bool parse = int.TryParse(Console.ReadLine(), out number);
+
+            while (parse == false)
+            {
+                Console.WriteLine("Virhe: Antamasi luku ei kelpaa, koska sen pitää olla kokonaisluku.");
+                Console.WriteLine("Anna luku >");
+                parse = int.TryParse(Console.ReadLine(), out number);
+            }
+
+            string stars = "";
+
+            for (int i = 1; i <= number; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    stars += "*";
+                }
+
+                Console.WriteLine(stars);
+                stars = string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Assignment 12
+        /// Tee ohjelma, joka kysyy käyttäjältä 5 kokonaislukua. Luvut tulee sijoittaa taulukkoon. 
+        /// Ohjelman tulee tulostaa annetut luvut käänteisessä järjestyksessä.
+        /// Anna Luku > 1 [Enter]
+        /// Anna Luku > 2 [Enter]
+        /// Anna Luku > 3 [Enter]
+        /// Anna Luku > 4 [Enter]
+        /// Anna Luku > 5 [Enter]
+        /// Luvut ovat 5,4,3,2,1
+        /// </summary>
+        private static void assignment12()
+        {
+            int number = 0;
+            int[] arr = new int[5];
+            bool ready = false;
+            bool parse = false;
+            int i = 0;
+
+            while (ready == false)
+            {
+                Console.WriteLine("Anna luku >");
+                parse = int.TryParse(Console.ReadLine(), out number);
+
+                while (parse == false)
+                {
+                    Console.WriteLine("Virhe: Antamasi luku ei kelpaa, koska sen pitää olla kokonaisluku.");
+                    Console.WriteLine("Anna luku >");
+                    parse = int.TryParse(Console.ReadLine(), out number);
+                }
+
+                arr[i] = number;
+                parse = false;
+
+                i++;
+
+                if (i == 5)
+                {
+                    ready = true;
+                }
+            }
+
+            // Order array
+
+            //Case 1 LINQ
+            arr = arr.OrderByDescending(c => c).ToArray();
+
+            Console.WriteLine(string.Format("Luvut ovat {0}", string.Join(", ", arr)));
+        }
+
         #endregion Assignments
 
         static void Main(string[] args)
@@ -396,64 +482,94 @@ namespace Harjoitukset1
                 1,2,3,4,5,6,7,8,9,10,11,12
             };
 
+            string action = "";
+
             Console.WriteLine("Tervetuloa käyttämään harjoitukset 1 -ohjelmaa");
-            Console.WriteLine("Valitse tehtävä syöttämällä numero:");
 
-            foreach (int numb in assignments)
+            bool run = true;
+
+            while (run)
             {
-                Console.WriteLine(string.Format("Tehtävä {0}", numb));
-            }
+                Console.WriteLine("Valitse tehtävä syöttämällä numero:");
 
-            Console.WriteLine("Anna tehtävän numero: ");
-
-            int assignment = 0;
-            bool parse = int.TryParse(Console.ReadLine(), out assignment);
-            
-            if(parse == false || assignment < 1 || assignment > 12)
-            {
-                Console.WriteLine("Syötit virheellisen tehtävänumeron.");
-                Console.ReadKey();
-            }
-            else
-            {
-                Console.WriteLine(string.Format("Käynnistit tehtävän {0}", assignment));
-
-                switch (assignment)
+                foreach (int numb in assignments)
                 {
-                    case 1:
-                        assignment1();
-                        break;
-                    case 2:
-                        assignment2();
-                        break;
-                    case 3:
-                        assignment3();
-                        break;
-                    case 4:
-                        assignment4();
-                        break;
-                    case 5:
-                        assignment5();
-                        break;
-                    case 6:
-                        assignment6();
-                        break;
-                    case 7:
-                        assignment7();
-                        break;
-                    case 8:
-                        assignment8();
-                        break;
-                    case 9:
-                        assignment9();
-                        break;
-                    case 10:
-                        assignment10();
-                        break;
+                    Console.WriteLine(string.Format("Tehtävä {0}", numb));
+                }
+
+                Console.WriteLine("Anna tehtävän numero: ");
+
+                int assignment = 0;
+                bool parse = int.TryParse(Console.ReadLine(), out assignment);
+
+                if (parse == false || assignment < 1 || assignment > 12)
+                {
+                    Console.WriteLine("Syötit virheellisen tehtävänumeron.");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Console.WriteLine(string.Format("Käynnistit tehtävän {0}", assignment));
+
+                    switch (assignment)
+                    {
+                        case 1:
+                            assignment1();
+                            break;
+                        case 2:
+                            assignment2();
+                            break;
+                        case 3:
+                            assignment3();
+                            break;
+                        case 4:
+                            assignment4();
+                            break;
+                        case 5:
+                            assignment5();
+                            break;
+                        case 6:
+                            assignment6();
+                            break;
+                        case 7:
+                            assignment7();
+                            break;
+                        case 8:
+                            assignment8();
+                            break;
+                        case 9:
+                            assignment9();
+                            break;
+                        case 10:
+                            assignment10();
+                            break;
+                        case 11:
+                            assignment11();
+                            break;
+                        case 12:
+                            assignment12();
+                            break;
+                    }
+                }
+
+                Console.WriteLine(Environment.NewLine + "Tehtävän ajo loppui.");
+                Console.WriteLine("Palaa ohjelman alkuun syöttämällä k tai e (lopettaa ohjelman ajamisen) " + Environment.NewLine + "ja painamalla enteria >");
+
+                action = Console.ReadLine();
+
+                while(action.ToLower().Equals("e") == false && action.ToLower().Equals("k") == false)
+                {
+                    Console.WriteLine("Palaa ohjelman alkuun syöttämällä k tai e (lopettaa ohjelman ajamisen) " + Environment.NewLine + "ja painamalla enteria >");
+                    action = Console.ReadLine();
+                }
+
+                if (action.ToLower().Equals("e"))
+                {
+                    run = false;
                 }
             }
 
-            Console.ReadKey();
+            
         }
     }
 }

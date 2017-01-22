@@ -161,11 +161,11 @@ namespace Harjoitukset2
             int levels = 0;
             bool parse = int.TryParse(Console.ReadLine(), out levels);
 
-            // Kysy niin kauan kunnes tulee kunnollinen arvo, joka on suurempi kuin nolla
+            // Kysy niin kauan kunnes tulee kunnollinen arvo, joka on vähintään 3, että saadaan järkevää puuta esille
             // Tämä ei toimi parillisella luvulla, pitää olla pariton koska tähdet ei muuten osu keskelle.
-            while (parse == false || levels < 1 || levels % 2 == 0)
+            while (parse == false || levels < 3 || levels % 2 == 0)
             {
-                Console.WriteLine("Virhe: Antamasi puunkorkeus ei kelpaa, koska sen pitää olla pariton kokonaisluku ja arvon suurempi kuin nolla.");
+                Console.WriteLine("Virhe: Antamasi puunkorkeus ei kelpaa, koska sen pitää olla pariton kokonaisluku ja arvon vähintään kolme.");
                 Console.WriteLine("Anna puunkorkeus parittomana kokonaislukuna >");
                 parse = int.TryParse(Console.ReadLine(), out levels);
             }

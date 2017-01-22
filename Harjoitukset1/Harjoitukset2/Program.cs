@@ -252,10 +252,57 @@ namespace Harjoitukset2
 
         /// <summary>
         /// Tehtävä 6
+        /// Tee ohjelma, joka kysyy käyttäjältä merkkijonon (lause). 
+        /// Sovelluksen tulee ilmoittaa käyttäjälle oliko annettu merkkijono palidromi.
         /// </summary>
         private static void assignment6()
         {
+            bool ready = false;
 
+            // Ajetaan niin kauan kunnes käyttäjä haluaa lopettaa tehtävän ajamisen
+            while (ready == false)
+            {
+                Console.WriteLine("Ohjelma tarkastaa onko sana palindromi.");
+                Console.WriteLine("Anna sana >");
+
+                string str = Console.ReadLine();
+
+                // Kysytään niin kauan kuin käyttäjä yrittää antaa tyhjää tai yhtä merkkiä, 
+                // jolloin ei ole järkeä tarkastaa palindromia
+                while (string.IsNullOrEmpty(str) || str.Length < 2)
+                {
+                    Console.WriteLine("Virhe: Palindromia ei voitu tarkastaa, koska annoit tyhjän sanan.");
+                    Console.WriteLine("Anna sana >");
+                    str = Console.ReadLine();
+                }
+
+                // Case 1 LINQ
+                bool palindrome = str.SequenceEqual(str.Reverse());
+
+                if (palindrome)
+                {
+                    Console.WriteLine("Sana oli palindromi");
+                }
+                else
+                {
+                    Console.WriteLine("Sana ei ollut palindromi");
+                }
+
+                Console.WriteLine("Testaa uudestaan palindromia syöttämällä k tai e (lopettaa tehtävän ajamisen) " + Environment.NewLine + "ja painamalla enteria >");
+                string action = Console.ReadLine();
+
+                while (action.ToLower().Equals("e") == false && action.ToLower().Equals("k") == false)
+                {
+                    Console.WriteLine("Arvaa uudestaan palindromia k tai e (lopettaa tehtävän ajamisen) " + Environment.NewLine + "ja painamalla enteria >");
+                    action = Console.ReadLine();
+                }
+
+                // Jos oli e, niin lopetetaan tehtävän ajaminen
+                if (action.ToLower().Equals("e"))
+                {
+                    ready = true;
+                }
+            }
         }
 
         /// <summary>

@@ -220,10 +220,34 @@ namespace Harjoitukset2
 
         /// <summary>
         /// Tehtävä 5
+        /// Tee ohjelma, joka lajittelee kahdessa kokonaislukutaulukossa olevat alkiot suurusjärjestykseen kolmanteen kokonaislukutaulukkoon. 
+        /// Tulosta lopuksi lajitellun taulukon sisältö.
+        /// 
+        /// Esimerkkitoiminta:
+        /// 
+        /// Luvut taulukossa 1 : 10,20,30,40,50
+        /// Luvut taulukossa 2 : 5,15,25,35,45
+        /// Luvut yhdistetyssä taulukossa : 5,10,15,20,25,30,35,40,45,50
         /// </summary>
         private static void assignment5()
         {
+            // Taulukko 1
+            int[] array1 = new int[] {
+                10,20,30,40,50
+            };
 
+            // Taulukko 2
+            int[] array2 = new int[] {
+                5,15,25,35,45
+            };
+
+            // Case 1 LINQ
+            int[] array3 = array1.Union(array2).ToArray();
+
+            // Sorttaa taulukon sisältö
+            Array.Sort(array3);
+
+            Console.WriteLine(string.Format("Luvut yhdistetyssä taulukossa ovat: {0}", string.Join(",", array3)));
         }
 
         /// <summary>

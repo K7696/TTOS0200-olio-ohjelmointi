@@ -398,10 +398,90 @@ namespace Harjoitukset2
 
         /// <summary>
         /// Tehtävä 7
+        /// Tee tekstipohjainen Hirsipuu-peli. Voit kovakoodata arvattavan sanan ja toteuta looppi, 
+        /// jossa käyttäjältä kysytään seuraavaa kirjainta. Muista näyttää aina kirjaimen jälkeen oikein 
+        /// arvatut kirjaimet sanan oikealla kohdalla (käytä esim _-alaviivaa ei arvattujen kirjainten kohdalla). 
+        /// Voit näyttää myös jo arvatut ei käytetyt -kirjaimet. Päätä itse milloin pelaaja joutuu hirteen.
         /// </summary>
         private static void assignment7()
         {
+            string word = "k o o d a r i";
+            int maxGuesses = 10;
+            int attemps = 0;
+            List<string> wrongLetters = new List<string>();
 
+            Console.WriteLine("Hirsipuupeli - yritä arvata sana oikein syöttämällä aina yksi kirjain");
+            Console.WriteLine("Peli näyttää oikeat kirjaimet ja väärin arvatut");
+            Console.WriteLine("Sana on: _ _ _ _ _ _ _");
+
+            string printWord = "_ _ _ _ _ _ _";
+
+            while (attemps < maxGuesses && word.Equals(printWord) == false)
+            {
+                Console.WriteLine("Anna kirjain >");
+
+                // Luetaan käyttäjän syöte
+                string letter = Console.ReadLine();
+
+                // Jos löytyi
+                if(word.Contains(letter))
+                {
+                    int index = 0;
+
+                    // Käydään kirjain kirjaimelta sanaa läpi
+                    foreach (char item in word)
+                    {
+                        // Korvataan esiintymä, jos sama
+                        if(item.ToString().Equals(letter))
+                        {
+                           printWord = ReplaceAt(printWord, index, item);
+                        }
+
+                        index++;
+                    }
+                }
+                else
+                {
+                    // Kasvata väärien merkkien määrää
+                    wrongLetters.Add(letter);
+                }
+
+                Console.WriteLine("Sana on: " + printWord);
+                Console.WriteLine("Väärin arvatut kirjaimet: ");
+                foreach (var item in wrongLetters)
+                {
+                    Console.Write(item.ToString() + " ");
+                }
+
+                Console.WriteLine("");
+
+                // Kasvata yrityskertoja
+                attemps++;
+            }
+
+            if (word.Equals(printWord))
+                Console.WriteLine("Onneksi olkoon vältit hirsipuun arvaamalla kirjaimet oikein :)");
+            else
+                Console.WriteLine("Auts, et arvannut kirjaimia oikein ja jouduit hirsipuuhun :(");
+        }
+
+        /// <summary>
+        /// Korvaa merkin oikeasta kohdasta ja palauttaa uuden merkkijonon
+        /// Kopsattu: http://stackoverflow.com/questions/9367119/replacing-a-char-at-a-given-index-in-string
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="index"></param>
+        /// <param name="newChar"></param>
+        /// <returns></returns>
+        private static string ReplaceAt(string input, int index, char newChar)
+        {
+            if (input == null)
+            {
+                throw new ArgumentNullException("input");
+            }
+            char[] chars = input.ToCharArray();
+            chars[index] = newChar;
+            return new string(chars);
         }
 
 

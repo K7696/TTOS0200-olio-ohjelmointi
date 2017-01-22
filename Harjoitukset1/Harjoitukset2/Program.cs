@@ -151,10 +151,101 @@ namespace Harjoitukset2
 
         /// <summary>
         /// Tehtävä 3
+        /// Tee ohjelma, joka tulostaa seuraavanlaisen kuvion. Kysy käyttäjältä puunkorkeus käytä 
+        /// juurena kaksi korkeuden yksikkö.
         /// </summary>
         private static void assignment3()
         {
+            // Kysytään käyttäjältä puunkorkeus
+            Console.WriteLine("Anna puunkorkeus parittomana kokonaislukuna >");
+            int levels = 0;
+            bool parse = int.TryParse(Console.ReadLine(), out levels);
 
+            // Kysy niin kauan kunnes tulee kunnollinen arvo, joka on suurempi kuin nolla
+            // Tämä ei toimi parillisella luvulla, pitää olla pariton koska tähdet ei muuten osu keskelle.
+            while (parse == false || levels < 1 || levels % 2 == 0)
+            {
+                Console.WriteLine("Virhe: Antamasi puunkorkeus ei kelpaa, koska sen pitää olla pariton kokonaisluku ja arvon suurempi kuin nolla.");
+                Console.WriteLine("Anna puunkorkeus parittomana kokonaislukuna >");
+                parse = int.TryParse(Console.ReadLine(), out levels);
+            }
+
+            // Koska rivillä kasvaa aina kahdella tähtien määrä, niin levels + 2
+            int totalLevels = levels + 2;
+
+            // Laita luvut taulukkoon, jotta saadaan keskikohta selville
+            int[] array = new int[totalLevels];
+            for (int i = 0; i < totalLevels; i++)
+            {
+                array[i] = i + 1;
+            }
+
+            // Laske taulukon keskikohta
+            int startingPoint = array[array.Length / 2];
+
+            // Alussa tähtiä on vain 1
+            int stars = 1;
+            string starsStr = "";
+
+            // Tänne sijoitetaan koko setti, mikä printataan kerralla ulos
+            StringBuilder sbLevels = new StringBuilder();
+
+            int index = 0;
+
+            // Tää on kyllä ihan kauhean näköstä, mutta tuntuu toimivan...
+            while (index < totalLevels)
+            {
+                for (int i = 0; i < levels; i++)
+                {
+                    if (i + 1 == startingPoint)
+                    {
+                        for (int j = 0; j < stars; j++)
+                        {
+                            starsStr += "*";
+                        }
+
+                        // Lisää rivi puuhun
+                        sbLevels.AppendFormat("{0}{1}", starsStr, Environment.NewLine);
+                    }
+                    else
+                    {
+                        // Lisää tyhjä niin kauan kunnes startingPoint löytyy
+                        starsStr += " ";
+                    }
+                }
+
+                // Lisää 2 tähteä seuraava riviä varten
+                stars += 2;
+
+                // Tyhjennä temp-muuttuja
+                starsStr = "";
+
+                // Vähennä aloituskohtaa -1
+                startingPoint--;
+
+                // Kasvata indexia
+                index++;
+
+                // Jos seuraava kierros on toiseksi viimeinen kierros
+                // Aseta starting point keskikohtaan
+                // Jotta saadaan yksi tähti keskelle
+                if ((index+2) == array.Length)
+                {
+                    startingPoint = array[array.Length / 2];
+                    stars = 1;
+                }
+                // Jos seuraava kierros on viimeinen kierros
+                // Aseta starting point keskikohtaan
+                // Jotta saadaan yksi tähti keskelle
+                else if ((index+1) == array.Length)
+                {
+                    startingPoint = array[array.Length / 2];
+                    stars = 1;
+                }
+            }
+
+            // Tulosta setti
+            Console.WriteLine(sbLevels.ToString());
         }
 
         /// <summary>

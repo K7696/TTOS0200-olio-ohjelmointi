@@ -159,10 +159,63 @@ namespace Harjoitukset2
 
         /// <summary>
         /// Tehtävä 4
+        /// Tee ohjelma, joka arpoo satunnaisluvun väliltä 0-100. Tämän jälkeen ohjelman käyttäjää kehoitetaan arvaaman arvottu luku. 
+        /// Ohjelman tulee antaa vihje arvauksen jälkeen onko arvottu luku pienempi vai suurempi. Tämän jälkeen vihjeitä toistetaan 
+        /// kunnes käyttäjä arvaa oikean luvun. Tulosta lopuksi arvausten määrä näytölle.
+        /// 
+        /// Esimerkkitoiminta:
+        /// 
+        /// Arvaa luku > 50 [Enter]
+        /// Luku on suurempi
+        /// Arvaa luku > 75 [Enter]
+        /// Luku on pienempi
+        /// Arvaa luku > 66 [Enter]
+        /// Hienoa, arvasit luvun 3 kerralla.
         /// </summary>
         private static void assignment4()
         {
+            // Arvo luku väliltä 0-100
+            Random random = new Random();
+            int randomNumber = random.Next(0, 100);
 
+            bool correct = false;
+            bool parse = false;
+            int number = 0;
+            int guesses = 0;
+
+            // Kysy niin kauan kunnes oikea luku tulee
+            while (correct == false)
+            {
+                Console.WriteLine("Arvaa luku >");
+                parse = int.TryParse(Console.ReadLine(), out number);
+
+                // Kysy niin kauan kunnes tulee kunnollinen arvo väliltä 0-100
+                while (parse == false || number < 0 || number > 100)
+                {
+                    Console.WriteLine("Virhe: Antamasi luku ei kelpaa, koska sen pitää olla kokonaisluku väliltä 0-100.");
+                    Console.WriteLine("Arvaa luku >");
+                    parse = int.TryParse(Console.ReadLine(), out number);
+                }
+
+                // Kasvata arvausten määrää
+                guesses++;
+
+                // Onko luku sama kuin random
+                if(number == randomNumber)
+                {
+                    correct = true;
+                }
+                else if(number < randomNumber)
+                {
+                    Console.WriteLine("Arvaamasi luku on pienempi kuin muistissa oleva luku. Yritä uudestaan.");
+                }
+                else if (number > randomNumber)
+                {
+                    Console.WriteLine("Arvaamasi luku on suurempi kuin muistissa oleva luku. Yritä uudestaan.");
+                }
+            }
+
+            Console.WriteLine(string.Format("Hienoa, arvasit luvun {0} kerralla.", guesses));
         }
 
         /// <summary>

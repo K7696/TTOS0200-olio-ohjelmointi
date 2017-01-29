@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 14 for Web
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harjoitus1", "Harjoitukset1\Harjoitus1.csproj", "{A65653A4-67D4-400C-B134-65C7C5C1337F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harjoitukset 1", "Harjoitukset1\Harjoitukset 1.csproj", "{A65653A4-67D4-400C-B134-65C7C5C1337F}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Harjoitukset2", "Harjoitukset2\Harjoitukset2.xproj", "{852CEE89-B5E4-4905-801C-6E7024DF6EAC}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Harjoitukset 2", "Harjoitukset2\Harjoitukset 2.xproj", "{852CEE89-B5E4-4905-801C-6E7024DF6EAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

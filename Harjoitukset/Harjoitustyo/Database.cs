@@ -12,6 +12,8 @@ namespace Harjoitustyo
     /// accdb-format neeeds this: https://social.msdn.microsoft.com/Forums/en-US/1d5c04c7-157f-4955-a14b-41d912d50a64/how-to-fix-error-the-microsoftaceoledb120-provider-is-not-registered-on-the-local-machine?forum=vstsdb
     /// Microsoft Access Database Engine 2010 Redistributable 
     /// 2007 Office System Driver: Data Connectivity Components 
+    /// 
+    /// Access CRUD: http://www.codescratcher.com/wpf/add-edit-delete-data-wpf-access-database/
     /// </summary>
     public class Database
     {

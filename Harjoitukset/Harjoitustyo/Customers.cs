@@ -48,7 +48,10 @@ namespace Harjoitustyo
                 this.CustomerList.Add(new Customer {
                     Id = int.Parse(dr["CustomerId"].ToString()),
                     Firstname = dr["Firstname"].ToString(),
-                    Lastname = dr["Lastname"].ToString()
+                    Lastname = dr["Lastname"].ToString(),
+                    InvoicingAddress = new Address() {
+                        AddressId = 10000
+                    }
                 });
             }
 

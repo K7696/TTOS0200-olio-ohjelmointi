@@ -13,6 +13,8 @@ namespace Harjoitustyo
 
         public int Id { get; set; }
 
+        public Address InvoicingAddress { get; set; }
+
         #endregion Properties
     }
 }

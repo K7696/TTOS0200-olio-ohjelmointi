@@ -17,6 +17,20 @@ namespace Harjoitustyo
     /// </summary>
     public class Database
     {
+        #region Fields
+
+        /// <summary>
+        /// Connectionstring for db
+        /// </summary>
+        private string connectionString;
+
+        /// <summary>
+        /// Database connection
+        /// </summary>
+        private OleDbConnection connection;
+
+        #endregion Fields
+
         #region Constructors
 
         /// <summary>
@@ -24,7 +38,11 @@ namespace Harjoitustyo
         /// </summary>
         public Database()
         {
+            // TODO: Lue app.confista
+            connectionString = "Provider=Microsoft.ACE.OLEDB.12.0; Data Source=" + AppDomain.CurrentDomain.BaseDirectory + "\\Talous.accdb";
 
+            connection = new OleDbConnection();
+            connection.ConnectionString = connectionString;
         }
 
         #endregion Constructors
@@ -32,27 +50,61 @@ namespace Harjoitustyo
         #region Public methods
 
         /// <summary>
-        /// Get datatable by sql
+        /// Get records from a database
         /// </summary>
-        /// <param name="sql"></param>
+        /// <param name="sql">SQL-Query</param>
         /// <returns></returns>
         public DataTable GetDataTable(string sql)
         {
-            OleDbCommand cmd = new OleDbCommand();
-            OleDbConnection con = new OleDbConnection();
-            con.ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0; Data Source=" + AppDomain.CurrentDomain.BaseDirectory + "\\Talous.accdb";
-
-            if (con.State != ConnectionState.Open)
-                con.Open();
-            cmd.Connection = con;
-            cmd.CommandText = sql;
-            OleDbDataAdapter da = new OleDbDataAdapter(cmd);
             DataTable dt = new DataTable();
-            da.Fill(dt);
+
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand();
+
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+
+                cmd.Connection = connection;
+                cmd.CommandText = sql;
+                OleDbDataAdapter da = new OleDbDataAdapter(cmd);
+
+                da.Fill(dt);
+
+                cmd.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Virhe: Tietokannasta luku epäonnistui.");
+            }
 
             return dt;
         }
 
+        /// <summary>
+        /// Add new record to a database
+        /// </summary>
+        /// <param name="sql">SQL-Query</param>
+        public void AddNewRecord(string sql)
+        {
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand();
+
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+
+                cmd.Connection = connection;
+                cmd.CommandText = sql;
+                cmd.ExecuteNonQuery();
+
+                cmd.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Virhe: Tietokantaan lisäys epäonnistui.");
+            }
+        }
 
         #endregion Public methods
     }

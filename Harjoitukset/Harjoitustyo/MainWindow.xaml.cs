@@ -38,28 +38,27 @@ namespace Harjoitustyo
             Loaded += MainWindow_Loaded;
         }
 
+        #endregion Constructors
+
+        #region Customer methods
+
+        /// <summary>
+        /// On app loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             loadCustomers();
         }
 
-        #endregion Constructors
-
-        #region Private methods
-
+        /// <summary>
+        /// Load customers
+        /// </summary>
         private void loadCustomers()
         {
             Customers customers = new Customers();
             dataGrid.ItemsSource = customers.GetCustomers();
-        }
-
-
-        #endregion Private methods
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            
-            
         }
 
         private void txtName_TextChanged(object sender, TextChangedEventArgs e)
@@ -81,11 +80,36 @@ namespace Harjoitustyo
             }
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Save customer data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            
+            Customer customer = new Customer();
+            customer.Firstname = tbFirstname.Text;
+            customer.Lastname = tbLastname.Text;
+            customer.AddCustomer();
 
             loadCustomers();
         }
+
+        private void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // Ensure row was clicked and not empty space
+            DataGridRow row = ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) as DataGridRow;
+            if (row == null) return;
+
+            Customer customer = (Customer)row.DataContext;
+            customer.GetCustomer();
+
+            tbFirstname.Text = customer.Firstname;
+            tbLastname.Text = customer.Lastname;
+        }
+
+
+        #endregion Customer methods
+
     }
 }

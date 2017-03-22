@@ -88,6 +88,50 @@ namespace Harjoitustyo
             }
         }
 
+        /// <summary>
+        /// Update customer
+        /// </summary>
+        public void UpdateCustomer()
+        {
+            try
+            {
+                string sql = string.Format(@"
+UPDATE 
+    Customers 
+SET 
+    Firstname = '{1}',
+    Lastname = '{2}'
+WHERE 
+    CustomerId = {0}", 
+    this.Id,
+    this.Firstname,
+    this.Lastname
+    );
+
+                database.UpdateRecord(sql);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Delete customer
+        /// </summary>
+        public void DeleteCustomer()
+        {
+            try
+            {
+                string sql = string.Format("DELETE FROM Customers WHERE CustomerId = {0}", this.Id);
+                database.AddNewRecord(sql);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         #endregion Public methods
     }
 }

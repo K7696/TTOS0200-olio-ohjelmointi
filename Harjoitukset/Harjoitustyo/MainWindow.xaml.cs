@@ -26,6 +26,12 @@ namespace Harjoitustyo
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Fields
+
+        private Customer selectedCustomer;
+
+        #endregion Fields
+
         #region Constructors
 
         /// <summary>
@@ -57,10 +63,23 @@ namespace Harjoitustyo
         /// </summary>
         private void loadCustomers()
         {
-            Customers customers = new Customers();
-            dataGrid.ItemsSource = customers.GetCustomers();
+            try
+            {
+                Customers customers = new Customers();
+                dataGrid.ItemsSource = customers.GetCustomers();
+            }
+            catch (Exception ex)
+            {
+                showError("Virhe: Asiakkaiden haku ei onnistunut.", "Asiakkaiden haku");
+            }
+            
         }
 
+        /// <summary>
+        /// Filter customer list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtName_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox t = (TextBox)sender;
@@ -87,25 +106,116 @@ namespace Harjoitustyo
         /// <param name="e"></param>
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            Customer customer = new Customer();
-            customer.Firstname = tbFirstname.Text;
-            customer.Lastname = tbLastname.Text;
-            customer.AddCustomer();
+            try
+            {
+                if (selectedCustomer == null)
+                {
+                    Customer customer = new Customer();
+                    customer.Firstname = tbFirstname.Text;
+                    customer.Lastname = tbLastname.Text;
+                    customer.AddCustomer();
 
-            loadCustomers();
+                    loadCustomers();
+                }
+                else
+                {
+                    selectedCustomer.Firstname = tbFirstname.Text;
+                    selectedCustomer.Lastname = tbLastname.Text;
+                    selectedCustomer.UpdateCustomer();
+
+                    loadCustomers();
+                }
+            }
+            catch (Exception ex)
+            {
+                showError("Virhe: Asiakkaan lisäys ei onnistunut.", "Asiakkaan lisäys");        
+            }
         }
 
+        /// <summary>
+        /// Select customer from a list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             // Ensure row was clicked and not empty space
             DataGridRow row = ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) as DataGridRow;
             if (row == null) return;
 
-            Customer customer = (Customer)row.DataContext;
-            customer.GetCustomer();
+            selectedCustomer = (Customer)row.DataContext;
+            selectedCustomer.GetCustomer();
 
-            tbFirstname.Text = customer.Firstname;
-            tbLastname.Text = customer.Lastname;
+            tbFirstname.Text = selectedCustomer.Firstname;
+            tbLastname.Text = selectedCustomer.Lastname;
+        }
+
+        /// <summary>
+        /// Clear customer form
+        /// </summary>
+        private void clearCustomerForm()
+        {
+            tbFirstname.Text = string.Empty;
+            tbLastname.Text = string.Empty;
+            tbCompany.Text = string.Empty;
+            tbStreetAddress.Text = string.Empty;
+            tbPostalCode.Text = string.Empty;
+            tbPostOffice.Text = string.Empty;
+            tbEmail.Text = string.Empty;
+            tbPhonenumber.Text = string.Empty;
+        }
+
+        /// <summary>
+        /// Cancel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            clearCustomerForm();
+            selectedCustomer = null;
+        }
+
+        /// <summary>
+        /// Show custom error
+        /// </summary>
+        /// <param name="error">Error message</param>
+        /// <param name="functionName">Name of a function</param>
+        private void showError(string error, string functionName)
+        {
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(error, functionName, System.Windows.MessageBoxButton.OK);
+        }
+
+        /// <summary>
+        /// Delete customer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if(selectedCustomer == null)
+            {
+                showError("Valitse poistettava asiakas listalta.", "Asiakkaan poisto");
+            }
+            else
+            {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Haluatko varmasti poistaa asiakkaan?", "Asiakkaan poisto", System.Windows.MessageBoxButton.YesNo);
+
+                if(messageBoxResult == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        selectedCustomer.DeleteCustomer();
+                        selectedCustomer = null;
+                        clearCustomerForm();
+                        loadCustomers();
+                    }
+                    catch (Exception ex)
+                    {
+                        showError("Virhe: Asiakkaan poisto ei onnistunut.", "Asiakkaan poisto");
+                    }
+                }               
+            }     
         }
 
 

@@ -51,7 +51,10 @@
                     <Label x:Name="lblPhonenumber" Content="Puhelin:" HorizontalAlignment="Left" Margin="491,239,0,0" VerticalAlignment="Top" Width="100"/>
                     <TextBox x:Name="tbEmail" HorizontalAlignment="Left" Height="23" Margin="596,267,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
                     <Label x:Name="lblEmail" Content="Sähköposti:" HorizontalAlignment="Left" Margin="491,267,0,0" VerticalAlignment="Top" Width="86"/>
-                    <Button x:Name="btnSave" Content="Tallenna" HorizontalAlignment="Left" Margin="491,298,0,0" VerticalAlignment="Top" Width="110" Height="45" Click="btnSave_Click"/>
+                    <Button x:Name="btnSave" Content="Tallenna" HorizontalAlignment="Left" Margin="491,298,0,0" VerticalAlignment="Top" Width="136" Height="45" Click="btnSave_Click"/>
+                    <Button x:Name="btnDelete" Content="Poista" HorizontalAlignment="Left" Margin="691,298,0,0" VerticalAlignment="Top" Width="54" Height="45" Click="btnDelete_Click"/>
+                    <Button x:Name="btnCancel" Content="Tyhjennä" HorizontalAlignment="Left" Margin="632,298,0,0" VerticalAlignment="Top" Width="54" Height="45" Click="btnCancel_Click"/>
+                    <Label x:Name="lblCustomerInfo" Content="" HorizontalAlignment="Left" Margin="491,360,0,0" VerticalAlignment="Top" Width="254"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Tuoterekisteri">

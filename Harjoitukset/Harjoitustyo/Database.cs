@@ -106,6 +106,56 @@ namespace Harjoitustyo
             }
         }
 
+        /// <summary>
+        /// Update database record
+        /// </summary>
+        /// <param name="sql">SQL-Query</param>
+        public void UpdateRecord(string sql)
+        {
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand();
+
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+
+                cmd.Connection = connection;
+                cmd.CommandText = sql;
+                cmd.ExecuteNonQuery();
+
+                cmd.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Virhe: Tietokantaan päivitys epäonnistui.");
+            }
+        }
+
+        /// <summary>
+        /// Delete record from a database
+        /// </summary>
+        /// <param name="sql">SQL-Query</param>
+        public void DeleteRecord(string sql)
+        {
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand();
+
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+
+                cmd.Connection = connection;
+                cmd.CommandText = sql;
+                cmd.ExecuteNonQuery();
+
+                cmd.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Virhe: Tietokannasta poistaminen epäonnistui.");
+            }
+        }
+
         #endregion Public methods
     }
 }

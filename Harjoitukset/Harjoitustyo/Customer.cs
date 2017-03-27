@@ -27,6 +27,11 @@ namespace Harjoitustyo
         public int Id { get; set; }
 
         /// <summary>
+        /// Company customer name
+        /// </summary>
+        public string Company { get; set; }
+
+        /// <summary>
         /// Invoicing address
         /// </summary>
         public Address InvoicingAddress { get; set; }
@@ -41,6 +46,8 @@ namespace Harjoitustyo
         public Customer()
         {
             database = new Database();
+
+            this.InvoicingAddress = new Address();
         }
 
         #endregion Constructors
@@ -54,8 +61,14 @@ namespace Harjoitustyo
         {
             try
             {
+                // First add customer
                 string sql = string.Format("INSERT INTO Customers(Firstname, Lastname) VALUES('{0}', '{1}')", this.Firstname, this.Lastname);
-                database.AddNewRecord(sql);
+                int customerId = database.AddNewRecord(sql);
+
+                // Then add address
+                this.InvoicingAddress.TargetId = customerId;
+                this.InvoicingAddress.AddressType = 2;
+                this.InvoicingAddress.AddAddress();
             }
             catch (Exception ex)
             {
@@ -71,6 +84,7 @@ namespace Harjoitustyo
         {
             try
             {
+                // First get customer
                 string sql = string.Format("SELECT * FROM Customers WHERE CustomerId = {0}", this.Id);
 
                 DataTable dt = database.GetDataTable(sql);
@@ -81,6 +95,9 @@ namespace Harjoitustyo
                     this.Firstname = dr["Firstname"].ToString();
                     this.Lastname = dr["Lastname"].ToString();
                 }
+
+                // Then get address
+                this.InvoicingAddress.GetAddress(this.Id, 2);
             }
             catch (Exception ex)
             {
@@ -124,7 +141,7 @@ WHERE
             try
             {
                 string sql = string.Format("DELETE FROM Customers WHERE CustomerId = {0}", this.Id);
-                database.AddNewRecord(sql);
+                database.DeleteRecord(sql);
             }
             catch (Exception ex)
             {

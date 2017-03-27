@@ -46,6 +46,21 @@ namespace Harjoitustyo
 
         #endregion Constructors
 
+        #region Common methods
+
+        /// <summary>
+        /// Show custom error
+        /// </summary>
+        /// <param name="error">Error message</param>
+        /// <param name="functionName">Name of a function</param>
+        private void showError(string error, string functionName)
+        {
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(error, functionName, System.Windows.MessageBoxButton.OK);
+        }
+
+
+        #endregion Common methods
+
         #region Customer methods
 
         /// <summary>
@@ -100,6 +115,22 @@ namespace Harjoitustyo
         }
 
         /// <summary>
+        /// Fill customer data
+        /// </summary>
+        /// <param name="customer"></param>
+        private void fillCustomerObject(ref Customer customer)
+        {
+            customer.Firstname = tbFirstname.Text;
+            customer.Lastname = tbLastname.Text;
+            customer.Company = tbCompany.Text;
+            customer.InvoicingAddress.StreetAddress = tbStreetAddress.Text;
+            customer.InvoicingAddress.PostalCode = tbPostalCode.Text;
+            customer.InvoicingAddress.City = tbCity.Text;
+            customer.Email = tbEmail.Text;
+            customer.Phonenumber = tbPhonenumber.Text;
+        }
+
+        /// <summary>
         /// Save customer data
         /// </summary>
         /// <param name="sender"></param>
@@ -110,21 +141,19 @@ namespace Harjoitustyo
             {
                 if (selectedCustomer == null)
                 {
+                    // Add new
                     Customer customer = new Customer();
-                    customer.Firstname = tbFirstname.Text;
-                    customer.Lastname = tbLastname.Text;
+                    fillCustomerObject(ref customer);
                     customer.AddCustomer();
-
-                    loadCustomers();
                 }
                 else
                 {
-                    selectedCustomer.Firstname = tbFirstname.Text;
-                    selectedCustomer.Lastname = tbLastname.Text;
+                    // Update existing
+                    fillCustomerObject(ref selectedCustomer);
                     selectedCustomer.UpdateCustomer();
-
-                    loadCustomers();
                 }
+
+                loadCustomers();
             }
             catch (Exception ex)
             {
@@ -139,15 +168,31 @@ namespace Harjoitustyo
         /// <param name="e"></param>
         private void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            // Ensure row was clicked and not empty space
-            DataGridRow row = ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) as DataGridRow;
-            if (row == null) return;
+            try
+            {
+                // Ensure row was clicked and not empty space
+                DataGridRow row = ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) as DataGridRow;
+                if (row == null) return;
 
-            selectedCustomer = (Customer)row.DataContext;
-            selectedCustomer.GetCustomer();
+                selectedCustomer = (Customer)row.DataContext;
+                selectedCustomer.GetCustomer();
 
-            tbFirstname.Text = selectedCustomer.Firstname;
-            tbLastname.Text = selectedCustomer.Lastname;
+                lblId.Content = string.Format("{0}", selectedCustomer.Id);
+                tbFirstname.Text = selectedCustomer.Firstname;
+                tbLastname.Text = selectedCustomer.Lastname;
+                tbCompany.Text = selectedCustomer.Company;
+                tbStreetAddress.Text = selectedCustomer.InvoicingAddress.StreetAddress;
+                tbPostalCode.Text = selectedCustomer.InvoicingAddress.PostalCode;
+                tbCity.Text = selectedCustomer.InvoicingAddress.City;
+                tbEmail.Text = selectedCustomer.Email;
+                tbPhonenumber.Text = selectedCustomer.Phonenumber;
+
+                lblCustomerHeader.Content = "Muokkaa asiakasta";
+            }
+            catch (Exception ex)
+            {
+                showError("Virhe: Asiakkaan valinta ei onnistunut.", "Muokkaa asiakasta");
+            }
         }
 
         /// <summary>
@@ -155,12 +200,18 @@ namespace Harjoitustyo
         /// </summary>
         private void clearCustomerForm()
         {
+            lblCustomerHeader.Content = "Lisää asiakas";
+
+            // Clear labels
+            lblId.Content = string.Empty;
+
+            // Clear form fields
             tbFirstname.Text = string.Empty;
             tbLastname.Text = string.Empty;
             tbCompany.Text = string.Empty;
             tbStreetAddress.Text = string.Empty;
             tbPostalCode.Text = string.Empty;
-            tbPostOffice.Text = string.Empty;
+            tbCity.Text = string.Empty;
             tbEmail.Text = string.Empty;
             tbPhonenumber.Text = string.Empty;
         }
@@ -174,16 +225,6 @@ namespace Harjoitustyo
         {
             clearCustomerForm();
             selectedCustomer = null;
-        }
-
-        /// <summary>
-        /// Show custom error
-        /// </summary>
-        /// <param name="error">Error message</param>
-        /// <param name="functionName">Name of a function</param>
-        private void showError(string error, string functionName)
-        {
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(error, functionName, System.Windows.MessageBoxButton.OK);
         }
 
         /// <summary>
@@ -217,7 +258,6 @@ namespace Harjoitustyo
                 }               
             }     
         }
-
 
         #endregion Customer methods
 

@@ -41,7 +41,15 @@ namespace Harjoitustyo
         public List<Customer> GetCustomers()
         {
             Database db = new Database();
-            DataTable dt = db.GetDataTable("Select * FROM Customers");
+            DataTable dt = db.GetDataTable(@"
+SELECT 
+    c.*,
+    a.* 
+FROM 
+    Customers c,
+    Address a
+WHERE 
+    a.TargetId = c.CustomerId AND a.AddressType = 2");
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -50,7 +58,12 @@ namespace Harjoitustyo
                     Firstname = dr["Firstname"].ToString(),
                     Lastname = dr["Lastname"].ToString(),
                     InvoicingAddress = new Address() {
-                        AddressId = 10000
+                        AddressId = int.Parse(dr["AddressId"].ToString()),
+                        TargetId = int.Parse(dr["TargetId"].ToString()),
+                        AddressType = int.Parse(dr["AddressType"].ToString()),
+                        PostalCode = dr["PostalCode"].ToString(),
+                        StreetAddress = dr["StreetAddress"].ToString(),
+                        City = dr["City"].ToString()
                     }
                 });
             }

@@ -85,8 +85,9 @@ namespace Harjoitustyo
         /// Add new record to a database
         /// </summary>
         /// <param name="sql">SQL-Query</param>
-        public void AddNewRecord(string sql)
+        public int AddNewRecord(string sql)
         {
+            int newId = 0;
             try
             {
                 OleDbCommand cmd = new OleDbCommand();
@@ -96,7 +97,12 @@ namespace Harjoitustyo
 
                 cmd.Connection = connection;
                 cmd.CommandText = sql;
-                cmd.ExecuteNonQuery();
+                cmd.ExecuteScalar();
+
+                using (OleDbCommand command = new OleDbCommand("SELECT @@IDENTITY;", connection))
+                {
+                    newId = (int)command.ExecuteScalar();
+                }
 
                 cmd.Connection.Close();
             }
@@ -104,6 +110,8 @@ namespace Harjoitustyo
             {
                 throw new Exception("Virhe: Tietokantaan lisäys epäonnistui.");
             }
+
+            return newId;
         }
 
         /// <summary>

@@ -126,6 +126,21 @@ namespace Harjoitustyo
             
         }
 
+        /// <summary>
+        /// Update address
+        /// </summary>
+        public void UpdateAddress()
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Virhe: Osoitteen päivitys ei onnistunut.");
+            }
+        }
+
         #endregion Public methods
     }
 }

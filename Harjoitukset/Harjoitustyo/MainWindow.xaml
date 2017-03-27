@@ -27,11 +27,14 @@
                       VerticalAlignment="Top" Height="449" Width="476" RenderTransformOrigin="0.507,0.66">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Yritys" Binding="{Binding Company}" />
                             <DataGridTextColumn Header="Etunimi" Binding="{Binding Firstname}" />
                             <DataGridTextColumn Header="Sukunimi" Binding="{Binding Lastname}" />
                             <DataGridTextColumn Header="Katuosoite" Binding="{Binding InvoicingAddress.StreetAddress}" />
                             <DataGridTextColumn Header="Postinumero" Binding="{Binding InvoicingAddress.PostalCode}" />
                             <DataGridTextColumn Header="Postitoimipaikka" Binding="{Binding InvoicingAddress.City}" />
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+                            <DataGridTextColumn Header="Puhelin" Binding="{Binding Phonenumber}" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <TextBox x:Name="textBox" TabIndex="1" HorizontalAlignment="Left" Height="23" Margin="140,34,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="txtName_TextChanged" />

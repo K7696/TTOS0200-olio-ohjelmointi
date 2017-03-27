@@ -112,20 +112,30 @@ namespace Harjoitustyo
         {
             try
             {
+                // First update customer
                 string sql = string.Format(@"
 UPDATE 
     Customers 
 SET 
     Firstname = '{1}',
-    Lastname = '{2}'
+    Lastname = '{2}',
+    Company = '{3}',
+    Email = '{4}',
+    Phonenumber = '{5}'
 WHERE 
     CustomerId = {0}", 
     this.Id,
     this.Firstname,
-    this.Lastname
+    this.Lastname,
+    this.Company,
+    this.Email,
+    this.Phonenumber
     );
 
                 database.UpdateRecord(sql);
+
+                // Then update address
+                this.InvoicingAddress.UpdateAddress();
             }
             catch (Exception ex)
             {

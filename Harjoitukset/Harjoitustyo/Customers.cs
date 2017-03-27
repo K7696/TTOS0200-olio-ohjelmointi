@@ -55,8 +55,11 @@ WHERE
             {
                 this.CustomerList.Add(new Customer {
                     Id = int.Parse(dr["CustomerId"].ToString()),
+                    Company = dr["Company"].ToString(),
                     Firstname = dr["Firstname"].ToString(),
                     Lastname = dr["Lastname"].ToString(),
+                    Email = dr["Email"].ToString(),
+                    Phonenumber = dr["Phonenumber"].ToString(),
                     InvoicingAddress = new Address() {
                         AddressId = int.Parse(dr["AddressId"].ToString()),
                         TargetId = int.Parse(dr["TargetId"].ToString()),

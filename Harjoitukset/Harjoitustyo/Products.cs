@@ -54,10 +54,10 @@ namespace Harjoitustyo
                 this.ProductList.Add(new Product
                 {
                     Id = int.Parse(dr["ProductId"].ToString()),
-                    Number = dr["Number"].ToString(),
-                    Name = dr["Name"].ToString(),
-                    VATPercent = decimal.Parse(dr["VATPercent"].ToString()),
-                    Price = decimal.Parse(dr["Price"].ToString()),
+                    Number = dr["ProductNumber"].ToString(),
+                    Name = dr["ProductName"].ToString(),
+                    VATPercent = double.Parse(dr["VATPercent"].ToString()),
+                    Price = double.Parse(dr["Price"].ToString()),
                     Created = DateTime.Parse(dr["Created"].ToString()),
                     Modified = DateTime.Parse(dr["Created"].ToString())
             });

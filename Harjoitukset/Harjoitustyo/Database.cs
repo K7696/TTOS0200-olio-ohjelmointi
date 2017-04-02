@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 
@@ -27,6 +29,16 @@ namespace Harjoitustyo
 
         #endregion Fields
 
+        #region Properties
+
+        /// <summary>
+        /// Query parameters
+        /// https://www.mikesdotnetting.com/article/26/parameter-queries-in-asp-net-with-ms-access
+        /// </summary>
+        public Dictionary<string, object> QueryParameters { get; set; }
+
+        #endregion Properties
+
         #region Constructors
 
         /// <summary>
@@ -39,6 +51,8 @@ namespace Harjoitustyo
 
             connection = new OleDbConnection();
             connection.ConnectionString = connectionString;
+
+            QueryParameters = new Dictionary<string, object>();
         }
 
         #endregion Constructors
@@ -118,16 +132,23 @@ namespace Harjoitustyo
         {
             try
             {
-                OleDbCommand cmd = new OleDbCommand();
+                using(OleDbCommand cmd = new OleDbCommand(sql, connection))
+                {
+                    cmd.CommandType = CommandType.Text;
 
-                if (connection.State != ConnectionState.Open)
+                    // Loop through possible query parameters
+                    foreach (var item in QueryParameters)
+                    {
+                        cmd.Parameters.AddWithValue(item.Key, item.Value);
+                    }
+
                     connection.Open();
+                    cmd.ExecuteNonQuery();
+                    cmd.Connection.Close();
+                }
 
-                cmd.Connection = connection;
-                cmd.CommandText = sql;
-                cmd.ExecuteNonQuery();
-
-                cmd.Connection.Close();
+                // Clear dictionary
+                this.QueryParameters.Clear();
             }
             catch (Exception ex)
             {
@@ -143,16 +164,23 @@ namespace Harjoitustyo
         {
             try
             {
-                OleDbCommand cmd = new OleDbCommand();
+                using (OleDbCommand cmd = new OleDbCommand(sql, connection))
+                {
+                    cmd.CommandType = CommandType.Text;
 
-                if (connection.State != ConnectionState.Open)
+                    // Loop through possible query parameters
+                    foreach (var item in QueryParameters)
+                    {
+                        cmd.Parameters.AddWithValue(item.Key, item.Value);
+                    }
+
                     connection.Open();
+                    cmd.ExecuteNonQuery();
+                    cmd.Connection.Close();
+                }
 
-                cmd.Connection = connection;
-                cmd.CommandText = sql;
-                cmd.ExecuteNonQuery();
-
-                cmd.Connection.Close();
+                // Clear dictionary
+                this.QueryParameters.Clear();
             }
             catch (Exception ex)
             {

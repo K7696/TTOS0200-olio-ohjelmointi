@@ -28,7 +28,15 @@ namespace Harjoitustyo
     {
         #region Fields
 
+        /// <summary>
+        /// Helper for update
+        /// </summary>
         private Customer selectedCustomer;
+
+        /// <summary>
+        /// Helper for update
+        /// </summary>
+        private Product selectedProduct;
 
         #endregion Fields
 
@@ -74,6 +82,9 @@ namespace Harjoitustyo
 
         #region Product methods
 
+        /// <summary>
+        /// Load products
+        /// </summary>
         private void loadProducts()
         {
             try
@@ -85,6 +96,119 @@ namespace Harjoitustyo
             {
                 showError("Virhe: Tuotteiden haku ei onnistunut.", "Tuotteiden haku");
             }
+        }
+
+        /// <summary>
+        /// Save product
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnProductSave_Click(object sender, RoutedEventArgs e)
+        {
+            Enums.Action action = Enums.Action.NotDefined;
+
+            try
+            {
+                if (selectedProduct == null)
+                {
+                    action = Enums.Action.Insert;
+
+                    // Add new
+                    Product product = new Product();
+                    fillProductObject(ref product);
+                    product.AddProduct();
+                    clearProductForm();
+                }
+                else
+                {
+                    action = Enums.Action.Update;
+
+                    // Update existing
+                    fillProductObject(ref selectedProduct);
+                    selectedProduct.UpdateProduct();
+                }
+
+                loadProducts();
+            }
+            catch (Exception ex)
+            {
+                if (action == Enums.Action.Insert)
+                    showError("Virhe: Tuotteen lisäys ei onnistunut.", "Tuotteen lisäys");
+                else if (action == Enums.Action.Update)
+                    showError("Virhe: Tuotteen muokkaus ei onnistunut.", "Tuotteen muokkaus");
+            }
+        }
+
+        /// <summary>
+        /// Clear product form
+        /// </summary>
+        private void clearProductForm()
+        {
+            // Clear labels
+            lblProductId.Content = string.Empty;
+            lblProductHeader.Content = "Lisää tuote";
+            lblCreated.Content = string.Empty;
+            lblModified.Content = string.Empty;
+
+            // Clear textboxes
+            tbProductNumber.Text = string.Empty;
+            tbProductName.Text = string.Empty;
+            tbVATPercent.Text = string.Empty;
+            tbPrice.Text = string.Empty;
+        }
+
+        /// <summary>
+        /// Fill product data
+        /// </summary>
+        /// <param name="product"></param>
+        private void fillProductObject(ref Product product)
+        {
+            product.Number = tbProductNumber.Text;
+            product.Name = tbProductName.Text;
+            product.VATPercent = double.Parse(tbVATPercent.Text);
+            product.Price = double.Parse(tbPrice.Text);
+        }
+
+        /// <summary>
+        /// Select a product from a list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ProductRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                // Ensure row was clicked and not empty space
+                DataGridRow row = ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) as DataGridRow;
+                if (row == null) return;
+
+                selectedProduct = (Product)row.DataContext;
+                selectedProduct.GetProduct();
+
+                lblProductId.Content = string.Format("{0}", selectedProduct.Id);
+                lblCreated.Content = selectedProduct.Created;
+                lblModified.Content = selectedProduct.Modified;
+                tbProductNumber.Text = selectedProduct.Number;
+                tbProductName.Text = selectedProduct.Name;
+                tbVATPercent.Text = selectedProduct.VATPercent.ToString();
+                tbPrice.Text = selectedProduct.Price.ToString();
+
+                lblProductHeader.Content = "Muokkaa tuotetta";
+            }
+            catch (Exception ex)
+            {
+                showError("Virhe: Tuotteen valinta ei onnistunut.", "Muokkaa tuotetta");
+            }
+        }
+
+        private void btnCancelProduct_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnDeleteProduct_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         #endregion Product methods
@@ -154,17 +278,24 @@ namespace Harjoitustyo
         /// <param name="e"></param>
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            Enums.Action action = Enums.Action.NotDefined;
+
             try
             {
                 if (selectedCustomer == null)
                 {
+                    action = Enums.Action.Insert;
+
                     // Add new
                     Customer customer = new Customer();
                     fillCustomerObject(ref customer);
                     customer.AddCustomer();
+                    clearCustomerForm();
                 }
                 else
                 {
+                    action = Enums.Action.Update;
+
                     // Update existing
                     fillCustomerObject(ref selectedCustomer);
                     selectedCustomer.UpdateCustomer();
@@ -174,7 +305,10 @@ namespace Harjoitustyo
             }
             catch (Exception ex)
             {
-                showError("Virhe: Asiakkaan lisäys ei onnistunut.", "Asiakkaan lisäys");        
+                if(action == Enums.Action.Insert)
+                    showError("Virhe: Asiakkaan lisäys ei onnistunut.", "Asiakkaan lisäys");    
+                else if(action == Enums.Action.Update)
+                    showError("Virhe: Asiakkaan muokkaus ei onnistunut.", "Asiakkaan muokkaus");
             }
         }
 
@@ -277,6 +411,5 @@ namespace Harjoitustyo
         }
 
         #endregion Customer methods
-
     }
 }

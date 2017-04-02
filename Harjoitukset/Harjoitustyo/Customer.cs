@@ -128,24 +128,26 @@ this.Phonenumber);
             try
             {
                 // First update customer
-                string sql = string.Format(@"
+                string sql = @"
 UPDATE 
     Customers 
 SET 
-    Firstname = '{1}',
-    Lastname = '{2}',
-    Company = '{3}',
-    Email = '{4}',
-    Phonenumber = '{5}'
+    Firstname = ?,
+    Lastname = ?,
+    Company = ?,
+    Email = ?,
+    Phonenumber = ?
 WHERE 
-    CustomerId = {0}", 
-    this.Id,
-    this.Firstname,
-    this.Lastname,
-    this.Company,
-    this.Email,
-    this.Phonenumber
-    );
+    CustomerId = ?"
+    ;
+
+                // Add query parameters (Dont change the order of parameters)
+                database.QueryParameters.Add("@Firstname", this.Firstname);
+                database.QueryParameters.Add("@Lastname", this.Lastname);
+                database.QueryParameters.Add("@Company", this.Company);
+                database.QueryParameters.Add("@Email", this.Email);
+                database.QueryParameters.Add("@Phonenumber", this.Phonenumber);
+                database.QueryParameters.Add("@Id", this.Id);
 
                 database.UpdateRecord(sql);
 
@@ -165,8 +167,16 @@ WHERE
         {
             try
             {
-                string sql = string.Format("DELETE FROM Customers WHERE CustomerId = {0}", this.Id);
+                // Remove customer
+                string sql = "DELETE FROM Customers WHERE CustomerId = ?";
+
+                // Add query parameters (Dont change the order of parameters)
+                database.QueryParameters.Add("@CustomerId", this.Id);
+
                 database.DeleteRecord(sql);
+
+                // Remove address
+                this.InvoicingAddress.DeleteAddress();
             }
             catch (Exception ex)
             {

@@ -83,7 +83,7 @@ namespace Harjoitustyo
             }
             catch (Exception ex)
             {
-                throw new Exception("Virhe: Osoitteen lisäys ei onnistunut.");
+                throw ex;
             }
 
             return addressId;
@@ -117,7 +117,7 @@ namespace Harjoitustyo
             }
             catch (Exception ex)
             {
-                throw new Exception("Virhe: Osoitteen haku ei onnistunut.");
+                throw ex;
             }
             
         }
@@ -129,11 +129,50 @@ namespace Harjoitustyo
         {
             try
             {
+                string sql = @"
+UPDATE 
+    Address
+SET 
+    StreetAddress = ?,
+    PostalCode = ?,
+    City = ?
+WHERE 
+    TargetId = ? AND 
+    AddressType = ?
+";              
+                // Add query parameters (Dont change the order of parameters)
+                database.QueryParameters.Add("@StreetAddress", this.StreetAddress);
+                database.QueryParameters.Add("@PostalCode", this.PostalCode);
+                database.QueryParameters.Add("@City", this.City);
+                database.QueryParameters.Add("@TargetId", this.TargetId);
+                database.QueryParameters.Add("@AddressType", this.AddressType);
 
+                database.UpdateRecord(sql);
             }
             catch (Exception ex)
             {
-                throw new Exception("Virhe: Osoitteen päivitys ei onnistunut.");
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Delete address
+        /// </summary>
+        public void DeleteAddress()
+        {
+            try
+            {
+                string sql = "DELETE FROM Address WHERE TargetId = ? AND AddressType = ?";
+
+                // Add query parameters (Dont change the order of parameters)
+                database.QueryParameters.Add("@TargetId", this.TargetId);
+                database.QueryParameters.Add("@AddressType", this.AddressType);
+
+                database.DeleteRecord(sql);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 

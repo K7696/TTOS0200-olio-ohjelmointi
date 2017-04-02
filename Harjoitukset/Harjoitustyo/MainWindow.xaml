@@ -20,7 +20,7 @@
                       MouseDoubleClick="Row_MouseDoubleClick"
                       AutoGenerateColumns="False"
                       IsReadOnly="True"
-                      CanUserDeleteRows="True"
+                      CanUserDeleteRows="False"
                       CanUserAddRows="False" 
                       HorizontalAlignment="Left" 
                       Margin="10,62,0,0" 
@@ -52,9 +52,9 @@
                     <Label x:Name="lblPostalCode" Content="Postinumero:" HorizontalAlignment="Left" Margin="491,233,0,0" VerticalAlignment="Top" Width="86"/>
                     <TextBox x:Name="tbCity" TabIndex="7" HorizontalAlignment="Left" Height="23" Margin="596,261,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
                     <Label x:Name="lblCity" Content="Postitoimipaikka:" HorizontalAlignment="Left" Margin="491,261,0,0" VerticalAlignment="Top" Width="100"/>
-                    <TextBox x:Name="tbPhonenumber" HorizontalAlignment="Left" Height="23" Margin="596,289,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
+                    <TextBox x:Name="tbPhonenumber" TabIndex="8" HorizontalAlignment="Left" Height="23" Margin="596,289,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
                     <Label x:Name="lblPhonenumber" Content="Puhelin:" HorizontalAlignment="Left" Margin="491,288,0,0" VerticalAlignment="Top" Width="100"/>
-                    <TextBox x:Name="tbEmail" HorizontalAlignment="Left" Height="23" Margin="596,317,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
+                    <TextBox x:Name="tbEmail" TabIndex="9" HorizontalAlignment="Left" Height="23" Margin="596,317,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
                     <Label x:Name="lblEmail" Content="Sähköposti:" HorizontalAlignment="Left" Margin="491,314,0,0" VerticalAlignment="Top" Width="86"/>
                     <Button x:Name="btnSave" Content="Tallenna" HorizontalAlignment="Left" Margin="491,353,0,0" VerticalAlignment="Top" Width="136" Height="45" Click="btnSave_Click"/>
                     <Button x:Name="btnDelete" Content="Poista" HorizontalAlignment="Left" Margin="691,353,0,0" VerticalAlignment="Top" Width="54" Height="45" Click="btnDelete_Click"/>
@@ -65,7 +65,48 @@
             </TabItem>
             <TabItem Header="Tuoterekisteri">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" Width="499" Height="434"/>
+                    <DataGrid x:Name="dgProducts" 
+                              ItemsSource="{Binding Products}" 
+                              MouseDoubleClick="ProductRow_MouseDoubleClick"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              CanUserDeleteRows="False"
+                              CanUserAddRows="False" 
+                              HorizontalAlignment="Left" 
+                              Margin="10,62,0,0" 
+                              VerticalAlignment="Top" 
+                              Height="449" 
+                              Width="476" 
+                              RenderTransformOrigin="0.507,0.66">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Tuotenumero" Binding="{Binding Number}" />
+                            <DataGridTextColumn Header="Tuotenimi" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Arvolisävero %" Binding="{Binding VATPercent}" />
+                            <DataGridTextColumn Header="Hinta" Binding="{Binding Price}" />
+                            <DataGridTextColumn Header="Lisätty" Binding="{Binding Created}" />
+                            <DataGridTextColumn Header="Muokattu" Binding="{Binding Modified}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label x:Name="lblProductHeader" Content="Lisää tuote" HorizontalAlignment="Left" Margin="491,62,0,0" VerticalAlignment="Top" Width="254" FontSize="18"/>
+                    <Label x:Name="lblProductIdHeader" Content="Id:" HorizontalAlignment="Left" Margin="491,101,0,0" VerticalAlignment="Top" Width="100"/>
+                    <Label x:Name="lblProductId" Content="" HorizontalAlignment="Left" Margin="596,101,0,0" VerticalAlignment="Top" Width="149"/>
+                    <Label x:Name="lblProductNumber" Content="Tuotenumero:" HorizontalAlignment="Left" Margin="491,132,0,0" VerticalAlignment="Top" Width="100"/>
+                    <TextBox x:Name="tbProductNumber" TabIndex="0" HorizontalAlignment="Left" Height="23" Margin="596,135,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
+                    <Label x:Name="lblProductName" Content="Tuotenimi:" HorizontalAlignment="Left" Margin="491,163,0,0" VerticalAlignment="Top" Width="100"/>
+                    <TextBox x:Name="tbProductName" TabIndex="1" HorizontalAlignment="Left" Height="23" Margin="596,167,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
+                    <Label x:Name="lblVATPercent" Content="Arvonlisävero %:" HorizontalAlignment="Left" Margin="491,194,0,0" VerticalAlignment="Top" Width="100"/>
+                    <TextBox x:Name="tbVATPercent" TabIndex="2" HorizontalAlignment="Left" Height="23" Margin="596,195,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
+                    <Label x:Name="lblPrice" Content="Hinta:" HorizontalAlignment="Left" Margin="491,225,0,0" VerticalAlignment="Top" Width="100"/>
+                    <TextBox x:Name="tbPrice" TabIndex="3" HorizontalAlignment="Left" Height="23" Margin="596,228,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
+                    <Label x:Name="lblCreatedHeader" Content="Lisätty:" HorizontalAlignment="Left" Margin="491,256,0,0" VerticalAlignment="Top" Width="100"/>
+                    <Label x:Name="lblCreated" Content="" HorizontalAlignment="Left" Margin="596,256,0,0" VerticalAlignment="Top" Width="149"/>
+                    <Label x:Name="lblModifiedHeader" Content="Muokattu:" HorizontalAlignment="Left" Margin="491,287,0,0" VerticalAlignment="Top" Width="100"/>
+                    <Label x:Name="lblModified" Content="" HorizontalAlignment="Left" Margin="596,287,0,0" VerticalAlignment="Top" Width="149"/>
+                    <Button x:Name="btnProductSave" Content="Tallenna" HorizontalAlignment="Left" Margin="491,318,0,0" VerticalAlignment="Top" Width="136" Height="45" Click="btnProductSave_Click"/>
+                    <Button x:Name="btnDeleteProduct" Content="Poista" HorizontalAlignment="Left" Margin="691,318,0,0" VerticalAlignment="Top" Width="54" Height="45" Click="btnDeleteProduct_Click"/>
+                    <Button x:Name="btnCancelProduct" Content="Tyhjennä" HorizontalAlignment="Left" Margin="632,318,0,0" VerticalAlignment="Top" Width="54" Height="45" Click="btnCancelProduct_Click"/>
+
                 </Grid>
             </TabItem>
             <TabItem Header="Myyntilaskut">

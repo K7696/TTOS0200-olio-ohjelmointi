@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace Harjoitustyo
 {
     public class Customers : ObservableCollection<Customer>
     {
+        #region Fields
+
+        private Database database;
+
+        #endregion Fields
+
         #region Properties
 
         /// <summary>
@@ -28,6 +29,8 @@ namespace Harjoitustyo
         public Customers()
         {
             CustomerList = new List<Customer>();
+
+            database = new Database();
         }
 
         #endregion Constructors
@@ -40,8 +43,7 @@ namespace Harjoitustyo
         /// <returns></returns>
         public List<Customer> GetCustomers()
         {
-            Database db = new Database();
-            DataTable dt = db.GetDataTable(@"
+            DataTable dt = database.GetDataTable(@"
 SELECT 
     c.*,
     a.* 

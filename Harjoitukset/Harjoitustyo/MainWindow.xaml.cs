@@ -58,11 +58,6 @@ namespace Harjoitustyo
             MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(error, functionName, System.Windows.MessageBoxButton.OK);
         }
 
-
-        #endregion Common methods
-
-        #region Customer methods
-
         /// <summary>
         /// On app loaded
         /// </summary>
@@ -71,7 +66,30 @@ namespace Harjoitustyo
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             loadCustomers();
+            loadProducts();
         }
+
+
+        #endregion Common methods
+
+        #region Product methods
+
+        private void loadProducts()
+        {
+            try
+            {
+                Products products = new Products();
+                dgProducts.ItemsSource = products.GetProducts();
+            }
+            catch (Exception ex)
+            {
+                showError("Virhe: Tuotteiden haku ei onnistunut.", "Tuotteiden haku");
+            }
+        }
+
+        #endregion Product methods
+
+        #region Customer methods
 
         /// <summary>
         /// Load customers
@@ -86,8 +104,7 @@ namespace Harjoitustyo
             catch (Exception ex)
             {
                 showError("Virhe: Asiakkaiden haku ei onnistunut.", "Asiakkaiden haku");
-            }
-            
+            }           
         }
 
         /// <summary>

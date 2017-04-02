@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace Harjoitustyo
 {
@@ -61,8 +56,28 @@ namespace Harjoitustyo
         {
             try
             {
+                string sql = string.Format(@"
+INSERT INTO Customers(
+    Firstname, 
+    Lastname,
+    Company,
+    Email,
+    Phonenumber
+) 
+VALUES(
+    '{0}', 
+    '{1}',
+    '{2}',
+    '{3}',
+    '{4}'
+)",
+this.Firstname,
+this.Lastname,
+this.Company,
+this.Email,
+this.Phonenumber);
+
                 // First add customer
-                string sql = string.Format("INSERT INTO Customers(Firstname, Lastname) VALUES('{0}', '{1}')", this.Firstname, this.Lastname);
                 int customerId = database.AddNewRecord(sql);
 
                 // Then add address

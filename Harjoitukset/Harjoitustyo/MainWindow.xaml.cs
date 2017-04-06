@@ -126,6 +126,9 @@ namespace Harjoitustyo
                     // Update existing
                     fillProductObject(ref selectedProduct);
                     selectedProduct.UpdateProduct();
+
+                    selectedProduct.GetProduct();
+                    fillProductForm();
                 }
 
                 loadProducts();
@@ -140,13 +143,29 @@ namespace Harjoitustyo
         }
 
         /// <summary>
+        /// Fill product form
+        /// </summary>
+        public void fillProductForm()
+        {
+            lblProductHeader.Content = "Muokkaa tuotetta";
+
+            lblProductId.Content = string.Format("{0}", selectedProduct.ProductId);
+            lblCreated.Content = selectedProduct.Created;
+            lblModified.Content = selectedProduct.Modified;
+            tbProductNumber.Text = selectedProduct.ProductNumber;
+            tbProductName.Text = selectedProduct.ProductName;
+            tbVATPercent.Text = selectedProduct.VATPercent;
+            tbPrice.Text = selectedProduct.Price;
+        }
+
+        /// <summary>
         /// Clear product form
         /// </summary>
         private void clearProductForm()
         {
             // Clear labels
-            lblProductId.Content = string.Empty;
             lblProductHeader.Content = "Lisää tuote";
+            lblProductId.Content = string.Empty;
             lblCreated.Content = string.Empty;
             lblModified.Content = string.Empty;
 
@@ -163,10 +182,10 @@ namespace Harjoitustyo
         /// <param name="product"></param>
         private void fillProductObject(ref Product product)
         {
-            product.Number = tbProductNumber.Text;
-            product.Name = tbProductName.Text;
-            product.VATPercent = double.Parse(tbVATPercent.Text);
-            product.Price = double.Parse(tbPrice.Text);
+            product.ProductNumber = tbProductNumber.Text;
+            product.ProductName = tbProductName.Text;
+            product.VATPercent = tbVATPercent.Text;
+            product.Price = tbPrice.Text;
         }
 
         /// <summary>
@@ -185,15 +204,7 @@ namespace Harjoitustyo
                 selectedProduct = (Product)row.DataContext;
                 selectedProduct.GetProduct();
 
-                lblProductId.Content = string.Format("{0}", selectedProduct.Id);
-                lblCreated.Content = selectedProduct.Created;
-                lblModified.Content = selectedProduct.Modified;
-                tbProductNumber.Text = selectedProduct.Number;
-                tbProductName.Text = selectedProduct.Name;
-                tbVATPercent.Text = selectedProduct.VATPercent.ToString();
-                tbPrice.Text = selectedProduct.Price.ToString();
-
-                lblProductHeader.Content = "Muokkaa tuotetta";
+                fillProductForm();
             }
             catch (Exception ex)
             {
@@ -201,14 +212,47 @@ namespace Harjoitustyo
             }
         }
 
+        /// <summary>
+        /// Clear product form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCancelProduct_Click(object sender, RoutedEventArgs e)
         {
-
+            selectedProduct = null;
+            clearProductForm();
         }
 
+        /// <summary>
+        /// Delete product
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDeleteProduct_Click(object sender, RoutedEventArgs e)
         {
+            if (selectedProduct == null)
+            {
+                showError("Valitse poistettava tuote listalta.", "Tuotteen poisto");
+            }
+            else
+            {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Haluatko varmasti poistaa tuotteen?", "Tuotteen poisto", System.Windows.MessageBoxButton.YesNo);
 
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        selectedProduct.DeleteProduct();
+                        selectedProduct = null;
+                        clearProductForm();
+                        loadProducts();
+                    }
+                    catch (Exception ex)
+                    {
+                        showError("Virhe: Tuotteen poisto ei onnistunut.", "Tuotteen poisto");
+                    }
+                }
+            }
         }
 
         #endregion Product methods
@@ -249,7 +293,7 @@ namespace Harjoitustyo
                 {
                     Customer p = o as Customer;
                     if (t.Name == "txtId")
-                        return (p.Id == Convert.ToInt32(filter));
+                        return (p.CustomerId == Convert.ToInt32(filter));
                     return (p.Lastname.ToUpper().Contains(filter.ToUpper()));
                 };
             }
@@ -328,7 +372,7 @@ namespace Harjoitustyo
                 selectedCustomer = (Customer)row.DataContext;
                 selectedCustomer.GetCustomer();
 
-                lblId.Content = string.Format("{0}", selectedCustomer.Id);
+                lblId.Content = string.Format("{0}", selectedCustomer.CustomerId);
                 tbFirstname.Text = selectedCustomer.Firstname;
                 tbLastname.Text = selectedCustomer.Lastname;
                 tbCompany.Text = selectedCustomer.Company;

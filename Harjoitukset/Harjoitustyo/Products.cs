@@ -47,19 +47,21 @@ namespace Harjoitustyo
         /// <returns></returns>
         public List<Product> GetProducts()
         {
-            DataTable dt = database.GetDataTable("SELECT p.* FROM Products p");
+            string sql = "SELECT p.* FROM Products p";
+
+            DataTable dt = database.GetDataTable(sql);
 
             foreach (DataRow dr in dt.Rows)
             {
                 this.ProductList.Add(new Product
                 {
-                    Id = int.Parse(dr["ProductId"].ToString()),
-                    Number = dr["ProductNumber"].ToString(),
-                    Name = dr["ProductName"].ToString(),
-                    VATPercent = double.Parse(dr["VATPercent"].ToString()),
-                    Price = double.Parse(dr["Price"].ToString()),
+                    ProductId = int.Parse(dr["ProductId"].ToString()),
+                    ProductNumber = dr["ProductNumber"].ToString(),
+                    ProductName = dr["ProductName"].ToString(),
+                    VATPercent = dr["VATPercent"].ToString(),
+                    Price = dr["Price"].ToString(),
                     Created = DateTime.Parse(dr["Created"].ToString()),
-                    Modified = DateTime.Parse(dr["Created"].ToString())
+                    Modified = DateTime.Parse(dr["Modified"].ToString())
             });
             }
 

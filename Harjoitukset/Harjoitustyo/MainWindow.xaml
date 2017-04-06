@@ -26,7 +26,7 @@
                       Margin="10,62,0,0" 
                       VerticalAlignment="Top" Height="449" Width="476" RenderTransformOrigin="0.507,0.66">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Id" Binding="{Binding CustomerId}" />
                             <DataGridTextColumn Header="Yritys" Binding="{Binding Company}" />
                             <DataGridTextColumn Header="Etunimi" Binding="{Binding Firstname}" />
                             <DataGridTextColumn Header="Sukunimi" Binding="{Binding Lastname}" />
@@ -79,9 +79,9 @@
                               Width="476" 
                               RenderTransformOrigin="0.507,0.66">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
-                            <DataGridTextColumn Header="Tuotenumero" Binding="{Binding Number}" />
-                            <DataGridTextColumn Header="Tuotenimi" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Id" Binding="{Binding ProductId}" />
+                            <DataGridTextColumn Header="Tuotenumero" Binding="{Binding ProductNumber}" />
+                            <DataGridTextColumn Header="Tuotenimi" Binding="{Binding ProductName}" />
                             <DataGridTextColumn Header="Arvolisävero %" Binding="{Binding VATPercent}" />
                             <DataGridTextColumn Header="Hinta" Binding="{Binding Price}" />
                             <DataGridTextColumn Header="Lisätty" Binding="{Binding Created}" />

@@ -70,18 +70,26 @@ namespace Harjoitustyo
 
             try
             {
-                OleDbCommand cmd = new OleDbCommand();
+                using (OleDbCommand cmd = new OleDbCommand(sql, connection))
+                {
+                    cmd.CommandType = CommandType.Text;
 
-                if (connection.State != ConnectionState.Open)
+                    // Loop through possible query parameters
+                    foreach (var item in QueryParameters)
+                    {
+                        cmd.Parameters.AddWithValue(item.Key, item.Value);
+                    }
+
                     connection.Open();
 
-                cmd.Connection = connection;
-                cmd.CommandText = sql;
-                OleDbDataAdapter da = new OleDbDataAdapter(cmd);
+                    OleDbDataAdapter da = new OleDbDataAdapter(cmd);
+                    da.Fill(dt);
 
-                da.Fill(dt);
+                    cmd.Connection.Close();
+                }
 
-                cmd.Connection.Close();
+                // Clear dictionary
+                this.QueryParameters.Clear();
             }
             catch (Exception ex)
             {
@@ -100,21 +108,29 @@ namespace Harjoitustyo
             int newId = 0;
             try
             {
-                OleDbCommand cmd = new OleDbCommand();
-
-                if (connection.State != ConnectionState.Open)
-                    connection.Open();
-
-                cmd.Connection = connection;
-                cmd.CommandText = sql;
-                cmd.ExecuteScalar();
-
-                using (OleDbCommand command = new OleDbCommand("SELECT @@IDENTITY;", connection))
+                using (OleDbCommand cmd = new OleDbCommand(sql, connection))
                 {
-                    newId = (int)command.ExecuteScalar();
+                    cmd.CommandType = CommandType.Text;
+
+                    // Loop through possible query parameters
+                    foreach (var item in QueryParameters)
+                    {
+                        cmd.Parameters.AddWithValue(item.Key, item.Value);
+                    }
+
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+
+                    using (OleDbCommand command = new OleDbCommand("SELECT @@IDENTITY;", connection))
+                    {
+                        newId = (int)command.ExecuteScalar();
+                    }
+
+                    cmd.Connection.Close();
                 }
 
-                cmd.Connection.Close();
+                // Clear dictionary
+                this.QueryParameters.Clear();
             }
             catch (Exception ex)
             {

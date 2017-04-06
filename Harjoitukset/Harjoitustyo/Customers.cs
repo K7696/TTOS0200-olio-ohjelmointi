@@ -43,7 +43,7 @@ namespace Harjoitustyo
         /// <returns></returns>
         public List<Customer> GetCustomers()
         {
-            DataTable dt = database.GetDataTable(@"
+           string sql = @"
 SELECT 
     c.*,
     a.* 
@@ -51,12 +51,17 @@ FROM
     Customers c,
     Address a
 WHERE 
-    a.TargetId = c.CustomerId AND a.AddressType = 2");
+    a.TargetId = c.CustomerId AND a.AddressType = ?";
+
+            // Add query parameters (Dont change the order of parameters)
+            database.QueryParameters.Add("@AddressType", (int)Enums.AddressType.CustomerAddress);
+
+            DataTable dt = database.GetDataTable(sql);
 
             foreach (DataRow dr in dt.Rows)
             {
                 this.CustomerList.Add(new Customer {
-                    Id = int.Parse(dr["CustomerId"].ToString()),
+                    CustomerId = int.Parse(dr["CustomerId"].ToString()),
                     Company = dr["Company"].ToString(),
                     Firstname = dr["Firstname"].ToString(),
                     Lastname = dr["Lastname"].ToString(),

@@ -72,12 +72,28 @@ namespace Harjoitustyo
 
             try
             {
-                string sql = string.Format("INSERT INTO Address(TargetId, AddressType, StreetAddress, PostalCode, City) VALUES({0}, {1}, '{2}', '{3}', '{4}')", 
-                    this.TargetId, 
-                    this.AddressType,
-                    this.StreetAddress,
-                    this.PostalCode,
-                    this.City);
+                string sql = @"
+INSERT INTO Address(
+    TargetId, 
+    AddressType, 
+    StreetAddress, 
+    PostalCode, 
+    City
+) 
+VALUES(
+    ?, 
+    ?, 
+    ?, 
+    ?, 
+    ?
+)";
+
+                // Add query parameters (Dont change the order of parameters)
+                database.QueryParameters.Add("@TargetId", this.TargetId);
+                database.QueryParameters.Add("@AddressType", this.AddressType);
+                database.QueryParameters.Add("@StreetAddress", this.StreetAddress);
+                database.QueryParameters.Add("@PostalCode", this.PostalCode);
+                database.QueryParameters.Add("@City", this.City);
 
                 addressId = database.AddNewRecord(sql);
             }
@@ -101,7 +117,11 @@ namespace Harjoitustyo
 
             try
             {
-                string sql = string.Format("SELECT * FROM Address WHERE targetId = {0} AND AddressType = {1}", targetId, addressType);
+                string sql = "SELECT * FROM Address WHERE targetId = ? AND AddressType = ?";
+
+                // Add query parameters (Dont change the order of parameters)
+                database.QueryParameters.Add("@TargetId", this.TargetId);
+                database.QueryParameters.Add("@AddressType", this.AddressType);
 
                 DataTable dt = database.GetDataTable(sql);
 

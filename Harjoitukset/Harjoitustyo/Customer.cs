@@ -19,7 +19,7 @@ namespace Harjoitustyo
         /// <summary>
         /// CustomerId
         /// </summary>
-        public int Id { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Company customer name
@@ -56,7 +56,7 @@ namespace Harjoitustyo
         {
             try
             {
-                string sql = string.Format(@"
+                string sql = @"
 INSERT INTO Customers(
     Firstname, 
     Lastname,
@@ -65,17 +65,18 @@ INSERT INTO Customers(
     Phonenumber
 ) 
 VALUES(
-    '{0}', 
-    '{1}',
-    '{2}',
-    '{3}',
-    '{4}'
-)",
-this.Firstname,
-this.Lastname,
-this.Company,
-this.Email,
-this.Phonenumber);
+    ?, 
+    ?,
+    ?,
+    ?,
+    ?
+)";
+                // Add query parameters (Dont change the order of parameters)
+                database.QueryParameters.Add("@Firstname", this.Firstname);
+                database.QueryParameters.Add("@Lastname", this.Lastname);
+                database.QueryParameters.Add("@Company", this.Company);
+                database.QueryParameters.Add("@Email", this.Email);
+                database.QueryParameters.Add("@Phonenumber", this.Phonenumber);
 
                 // First add customer
                 int customerId = database.AddNewRecord(sql);
@@ -100,19 +101,22 @@ this.Phonenumber);
             try
             {
                 // First get customer
-                string sql = string.Format("SELECT * FROM Customers WHERE CustomerId = {0}", this.Id);
+                string sql = "SELECT * FROM Customers WHERE CustomerId = ?";
+
+                // Add query parameters (Dont change the order of parameters)
+                database.QueryParameters.Add("@CustomerId", this.CustomerId);
 
                 DataTable dt = database.GetDataTable(sql);
 
                 foreach (DataRow dr in dt.Rows)
                 {
-                    this.Id = int.Parse(dr["CustomerId"].ToString());
+                    this.CustomerId = int.Parse(dr["CustomerId"].ToString());
                     this.Firstname = dr["Firstname"].ToString();
                     this.Lastname = dr["Lastname"].ToString();
                 }
 
                 // Then get address
-                this.InvoicingAddress.GetAddress(this.Id, 2);
+                this.InvoicingAddress.GetAddress(this.CustomerId, (int)Enums.AddressType.CustomerAddress);
             }
             catch (Exception ex)
             {
@@ -147,7 +151,7 @@ WHERE
                 database.QueryParameters.Add("@Company", this.Company);
                 database.QueryParameters.Add("@Email", this.Email);
                 database.QueryParameters.Add("@Phonenumber", this.Phonenumber);
-                database.QueryParameters.Add("@Id", this.Id);
+                database.QueryParameters.Add("@Id", this.CustomerId);
 
                 database.UpdateRecord(sql);
 
@@ -171,7 +175,7 @@ WHERE
                 string sql = "DELETE FROM Customers WHERE CustomerId = ?";
 
                 // Add query parameters (Dont change the order of parameters)
-                database.QueryParameters.Add("@CustomerId", this.Id);
+                database.QueryParameters.Add("@CustomerId", this.CustomerId);
 
                 database.DeleteRecord(sql);
 

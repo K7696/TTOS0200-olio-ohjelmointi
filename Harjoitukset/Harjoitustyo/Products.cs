@@ -44,7 +44,7 @@ namespace Harjoitustyo
         /// <returns></returns>
         public List<Product> GetProducts()
         {
-            string sql = "SELECT p.* FROM Products p";
+            string sql = "SELECT p.* FROM Products p ORDER BY p.ProductId ASC";
 
             DataTable dt = database.GetDataTable(sql);
 

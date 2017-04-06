@@ -51,7 +51,9 @@ FROM
     Customers c,
     Address a
 WHERE 
-    a.TargetId = c.CustomerId AND a.AddressType = ?";
+    a.TargetId = c.CustomerId AND a.AddressType = ?
+ORDER BY 
+    c.CustomerId ASC";
 
             // Add query parameters (Dont change the order of parameters)
             database.QueryParameters.Add("@AddressType", (int)Enums.AddressType.CustomerAddress);

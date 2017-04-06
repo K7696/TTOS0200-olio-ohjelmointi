@@ -83,7 +83,7 @@ VALUES(
 
                 // Then add address
                 this.InvoicingAddress.TargetId = customerId;
-                this.InvoicingAddress.AddressType = 2;
+                this.InvoicingAddress.AddressType = (int)Enums.AddressType.CustomerAddress;
                 this.InvoicingAddress.AddAddress();
             }
             catch (Exception ex)

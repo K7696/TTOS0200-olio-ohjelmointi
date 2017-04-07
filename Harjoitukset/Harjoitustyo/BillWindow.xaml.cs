@@ -21,6 +21,8 @@ namespace Harjoitustyo
     {
         #region Fields 
 
+        private Bill selectedBill;
+
         #endregion Fields
 
         #region Constructors
@@ -97,6 +99,26 @@ namespace Harjoitustyo
         #region Bill methods
 
         /// <summary>
+        /// Fill bill object
+        /// </summary>
+        /// <param name="bill"></param>
+        private void fillBillObject(ref Bill bill)
+        {
+            bill.BillNumber = tbBillNumber.Text;
+            bill.DueDate = DateTime.Parse(dueDate.SelectedDate.Value.ToShortDateString());
+            bill.BillDate = DateTime.Parse(billDate.SelectedDate.Value.ToShortDateString());
+            bill.ReferenceNumber = tbReferenceNumber.Text;
+            bill.Reference = tbReference.Text;
+            bill.OverdueRate = tbOverdueRate.Text;
+
+            //bill.IBAN
+            //bill.BIC
+
+            UI.ComboBoxItem item = (UI.ComboBoxItem)cbCustomers.SelectedItem;
+            bill.CustomerId = item.Id;
+        }
+
+        /// <summary>
         /// Save a bill
         /// </summary>
         /// <param name="sender"></param>
@@ -105,7 +127,18 @@ namespace Harjoitustyo
         {
             try
             {
+                if(selectedBill == null)
+                {
+                    // New bill
+                    Bill bill = new Bill();
+                    fillBillObject(ref bill);
+                    bill.AddBill();
+                }
+                else
+                {
+                    // Update bill
 
+                }
             }
             catch (Exception ex)
             {

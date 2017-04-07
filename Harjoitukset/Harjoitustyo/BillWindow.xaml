@@ -8,7 +8,7 @@
         Title="Lasku" Height="600" Width="700">
     <Grid>
         <Grid HorizontalAlignment="Left" Height="193" Margin="10,0,0,0" VerticalAlignment="Top" Width="672">
-            <TextBox x:Name="btnReferenceNumber" HorizontalAlignment="Left" Height="23" Margin="485,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177"/>
+            <TextBox x:Name="tbReferenceNumber" HorizontalAlignment="Left" Height="23" Margin="485,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177"/>
             <Label x:Name="lblReferenceNumber" Content="Viitenumero:" HorizontalAlignment="Left" Margin="390,91,0,0" VerticalAlignment="Top" Width="90"/>
             <TextBox x:Name="tbReference" HorizontalAlignment="Left" Height="61" Margin="485,122,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177"/>
             <Label x:Name="lblReference" Content="Viitteenne:" HorizontalAlignment="Left" Margin="390,137,0,0" VerticalAlignment="Top" Width="90"/>

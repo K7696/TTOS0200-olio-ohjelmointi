@@ -136,6 +136,9 @@
                     <Button x:Name="btnNewBillWindow" Content="Uusi lasku" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="47" Click="btnNewBillWindow_Click"/>
                 </Grid>
             </TabItem>
+            <TabItem x:Name="OwnData" Header="Omat tiedot" Margin="-2,-2,-35,0">
+                
+            </TabItem>
         </TabControl>
 
     </Grid>

@@ -80,6 +80,25 @@ namespace Harjoitustyo
 
         #endregion Common methods
 
+        #region Bill methods
+
+        /// <summary>
+        /// Load bills
+        /// </summary>
+        private void loadBills()
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                showError("Virhe: Laskujen haku ei onnistunut.", "Laskujen haku");
+            }
+        }
+
+        #endregion Bill methods
+
         #region Product methods
 
         /// <summary>

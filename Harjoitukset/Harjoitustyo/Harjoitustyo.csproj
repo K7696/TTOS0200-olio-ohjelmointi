@@ -71,6 +71,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </ApplicationDefinition>
     <Compile Include="Address.cs" />
+    <Compile Include="Bill.cs" />
+    <Compile Include="Bills.cs" />
     <Compile Include="Database.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

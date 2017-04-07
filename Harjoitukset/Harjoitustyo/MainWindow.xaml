@@ -110,7 +110,20 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Myyntilaskut">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="dgBills" ItemsSource="{Binding Bills}" 
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              CanUserDeleteRows="False"
+                              CanUserAddRows="False" 
+                              HorizontalAlignment="Left" 
+                              Margin="10,62,0,0" 
+                              VerticalAlignment="Top" 
+                              Height="449" 
+                              Width="735" 
+                              RenderTransformOrigin="0.507,0.66">
+                    </DataGrid>
+                </Grid>
             </TabItem>
         </TabControl>
 

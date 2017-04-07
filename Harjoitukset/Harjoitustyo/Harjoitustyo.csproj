@@ -72,8 +72,16 @@
     </ApplicationDefinition>
     <Compile Include="Address.cs" />
     <Compile Include="Bill.cs" />
+    <Compile Include="BillWindow.xaml.cs">
+      <DependentUpon>BillWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Bills.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="UI\ComboBoxItem.cs" />
+    <Page Include="BillWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

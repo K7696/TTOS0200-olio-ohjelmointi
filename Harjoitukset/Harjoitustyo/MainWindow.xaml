@@ -122,7 +122,18 @@
                               Height="449" 
                               Width="735" 
                               RenderTransformOrigin="0.507,0.66">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Binding="{Binding BillId}" />
+                            <DataGridTextColumn Header="Laskunumero" Binding="{Binding BillNumber}" />
+                            <DataGridTextColumn Header="Eräpäivä" Binding="{Binding DueDate}" />
+                            <DataGridTextColumn Header="Laskupvm" Binding="{Binding BillDate}" />
+                            <DataGridTextColumn Header="IBAN" Binding="{Binding IBAN}" />
+                            <DataGridTextColumn Header="BIC" Binding="{Binding BIC}" />
+                            <DataGridTextColumn Header="Lisätty" Binding="{Binding Created}" />
+                            <DataGridTextColumn Header="Muokattu" Binding="{Binding Modified}" />
+                        </DataGrid.Columns>
                     </DataGrid>
+                    <Button x:Name="btnNewBillWindow" Content="Uusi lasku" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="47" Click="btnNewBillWindow_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -75,6 +75,7 @@ namespace Harjoitustyo
         {
             loadCustomers();
             loadProducts();
+            loadBills();
         }
 
 
@@ -89,12 +90,25 @@ namespace Harjoitustyo
         {
             try
             {
-
+                Bills bills = new Bills();
+                dgBills.ItemsSource = bills.GetBills();
             }
             catch (Exception ex)
             {
                 showError("Virhe: Laskujen haku ei onnistunut.", "Laskujen haku");
             }
+        }
+
+        /// <summary>
+        /// Open new bill window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnNewBillWindow_Click(object sender, RoutedEventArgs e)
+        {
+            // Open bill window
+            BillWindow bw = new BillWindow();
+            bw.ShowDialog();
         }
 
         #endregion Bill methods
@@ -474,5 +488,7 @@ namespace Harjoitustyo
         }
 
         #endregion Customer methods
+
+        
     }
 }

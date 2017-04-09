@@ -112,6 +112,7 @@
             <TabItem Header="Myyntilaskut">
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="dgBills" ItemsSource="{Binding Bills}" 
+                              MouseDoubleClick="BillRow_MouseDoubleClick"
                               AutoGenerateColumns="False"
                               IsReadOnly="True"
                               CanUserDeleteRows="False"

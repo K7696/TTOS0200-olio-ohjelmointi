@@ -34,7 +34,7 @@ namespace Harjoitustyo
         /// <summary>
         /// Main window
         /// </summary>
-        private MainWindow mainWindow;
+        private MainWindow parentWindow;
 
         #endregion Fields
 
@@ -43,28 +43,58 @@ namespace Harjoitustyo
         /// <summary>
         /// Default ctor
         /// </summary>
-        public BillWindow(MainWindow main)
+        public BillWindow(MainWindow parent)
+        {
+            initBillWindow(parent, null);
+        }
+
+        /// <summary>
+        /// Overrided ctor
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="bill"></param>
+        public BillWindow(MainWindow parent, Bill bill)
+        {
+            initBillWindow(parent, bill);
+        }
+
+        #endregion Constructors
+
+        #region Private methods
+
+        /// <summary>
+        /// Initializer
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="bill"></param>
+        private void initBillWindow(MainWindow parent, Bill bill)
         {
             InitializeComponent();
 
-            mainWindow = main;
-            Owner = main;
+            // Set parent window
+            parentWindow = parent;
+            Owner = parent;
 
+            // Init bill object
+            selectedBill = bill;
+
+            // Init company object
             company = new Company();
 
             Loaded += BillWindow_Loaded;
         }
 
-        #endregion Constructors
+        #endregion Private methods
 
         #region Common methods
 
         /// <summary>
-        /// 
+        /// Call parent window's methods
         /// </summary>
         private void callMainWindow()
         {
-            mainWindow.Call();
+            // A parent window has a Call-method
+            parentWindow.Call();
         }
 
         /// <summary>
@@ -76,6 +106,9 @@ namespace Harjoitustyo
         {
             fillCustomerCombo();
             loadOwnData();
+
+            if (selectedBill != null)
+                getBill();
         }
 
         /// <summary>
@@ -154,6 +187,46 @@ namespace Harjoitustyo
 
         #region Bill methods
 
+        private void getBill()
+        {
+            try
+            {
+                selectedBill.GetBill();
+
+                fillBillForm();
+            }
+            catch (Exception ex)
+            {
+                showError("Virhe: Laskun haku ei onnistunut.", "Muokkaa laskua");
+            }
+        }
+
+        /// <summary>
+        /// Fill bill form
+        /// </summary>
+        private void fillBillForm()
+        {
+            tbBillNumber.Text = selectedBill.BillNumber;
+            tbReferenceNumber.Text = selectedBill.ReferenceNumber;
+            tbReference.Text = selectedBill.Reference;
+            tbOverdueRate.Text = selectedBill.OverdueRate;
+
+            dueDate.SelectedDate = selectedBill.DueDate;
+            billDate.SelectedDate = selectedBill.BillDate;
+
+            // Select customer (stupid way, but I don't have time to make it better)
+            List<UI.ComboBoxItem> list = new List<UI.ComboBoxItem>();
+
+            foreach (var item in cbCustomers.ItemsSource)
+            {
+                UI.ComboBoxItem it = (UI.ComboBoxItem)item;
+
+                list.Add(it);
+            }
+
+            cbCustomers.SelectedItem = list.Where(x => x.Id == selectedBill.CustomerId).FirstOrDefault();
+        }
+
         /// <summary>
         /// Fill bill object
         /// </summary>
@@ -175,6 +248,7 @@ namespace Harjoitustyo
             bill.BIC = company.BIC;
             bill.IBAN = company.IBAN;
 
+            // Get selected customer
             UI.ComboBoxItem item = (UI.ComboBoxItem)cbCustomers.SelectedItem;
 
             if (item != null)
@@ -197,12 +271,17 @@ namespace Harjoitustyo
                     fillBillObject(ref bill);
                     bill.AddBill();
 
+                    // Call parent window for updating list
                     callMainWindow();
                 }
                 else
                 {
                     // Update bill
+                    fillBillObject(ref selectedBill);
+                    selectedBill.UpdateBill();
 
+                    // Call parent window for updating list
+                    callMainWindow();
                 }
             }
             catch (Exception ex)

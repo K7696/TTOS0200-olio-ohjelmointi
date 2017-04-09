@@ -119,9 +119,36 @@ namespace Harjoitustyo
             bw.ShowDialog();
         }
 
+        /// <summary>
+        /// Call from child window
+        /// </summary>
         public void Call()
         {
             loadBills();
+        }
+
+        /// <summary>
+        /// Select a bill from a list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BillRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                // Ensure row was clicked and not empty space
+                DataGridRow row = ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) as DataGridRow;
+                if (row == null) return;
+
+                Bill bill = (Bill)row.DataContext;
+                // Open bill window
+                BillWindow bw = new BillWindow(this, bill);
+                bw.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                showError("Virhe: Laskun valinta ei onnistunut.", "Muokkaa laskua");
+            }
         }
 
         #endregion Bill methods

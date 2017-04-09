@@ -176,7 +176,7 @@ VALUES(
                 database.QueryParameters.Add("@Modified", inserted);
                 database.QueryParameters.Add("@OverdueRate", this.OverdueRate);
 
-                int billId = database.AddNewRecord(sql);
+                this.BillId = database.AddNewRecord(sql);
             }
             catch (Exception ex)
             {

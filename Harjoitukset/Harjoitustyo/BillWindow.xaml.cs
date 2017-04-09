@@ -211,6 +211,9 @@ namespace Harjoitustyo
 
         #region Bill methods
 
+        /// <summary>
+        /// Get a bill data
+        /// </summary>
         private void getBill()
         {
             try
@@ -309,6 +312,10 @@ namespace Harjoitustyo
                     if(validationErrors.Count() == 0)
                     {
                         bill.AddBill();
+
+                        // Get added bill
+                        bill.GetBill();
+                        selectedBill = bill;
 
                         // Call parent window for updating list
                         callMainWindow();

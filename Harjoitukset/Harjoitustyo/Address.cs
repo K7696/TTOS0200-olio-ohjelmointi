@@ -120,8 +120,8 @@ VALUES(
                 string sql = "SELECT * FROM Address WHERE targetId = ? AND AddressType = ?";
 
                 // Add query parameters (Dont change the order of parameters)
-                database.QueryParameters.Add("@TargetId", this.TargetId);
-                database.QueryParameters.Add("@AddressType", this.AddressType);
+                database.QueryParameters.Add("@TargetId", targetId);
+                database.QueryParameters.Add("@AddressType", addressType);
 
                 DataTable dt = database.GetDataTable(sql);
 

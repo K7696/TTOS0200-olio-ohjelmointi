@@ -114,7 +114,7 @@ namespace Harjoitustyo
                     // Loop through possible query parameters
                     foreach (var item in QueryParameters)
                     {
-                        cmd.Parameters.AddWithValue(item.Key, item.Value);
+                            cmd.Parameters.AddWithValue(item.Key, item.Value);
                     }
 
                     connection.Open();

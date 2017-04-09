@@ -76,6 +76,7 @@
       <DependentUpon>BillWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bills.cs" />
+    <Compile Include="Company.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="UI\ComboBoxItem.cs" />
     <Page Include="BillWindow.xaml">

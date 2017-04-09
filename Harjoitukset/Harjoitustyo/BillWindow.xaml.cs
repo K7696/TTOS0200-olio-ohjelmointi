@@ -21,7 +21,20 @@ namespace Harjoitustyo
     {
         #region Fields 
 
+        /// <summary>
+        /// Selected bill
+        /// </summary>
         private Bill selectedBill;
+
+        /// <summary>
+        /// Company data
+        /// </summary>
+        private Company company;
+
+        /// <summary>
+        /// Main window
+        /// </summary>
+        private MainWindow mainWindow;
 
         #endregion Fields
 
@@ -30,9 +43,14 @@ namespace Harjoitustyo
         /// <summary>
         /// Default ctor
         /// </summary>
-        public BillWindow()
+        public BillWindow(MainWindow main)
         {
             InitializeComponent();
+
+            mainWindow = main;
+            Owner = main;
+
+            company = new Company();
 
             Loaded += BillWindow_Loaded;
         }
@@ -42,6 +60,14 @@ namespace Harjoitustyo
         #region Common methods
 
         /// <summary>
+        /// 
+        /// </summary>
+        private void callMainWindow()
+        {
+            mainWindow.Call();
+        }
+
+        /// <summary>
         /// On window loadead
         /// </summary>
         /// <param name="sender"></param>
@@ -49,9 +75,39 @@ namespace Harjoitustyo
         private void BillWindow_Loaded(object sender, RoutedEventArgs e)
         {
             fillCustomerCombo();
+            loadOwnData();
+        }
+
+        /// <summary>
+        /// Show custom error
+        /// </summary>
+        /// <param name="error">Error message</param>
+        /// <param name="functionName">Name of a function</param>
+        private void showError(string error, string functionName)
+        {
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(error, functionName, System.Windows.MessageBoxButton.OK);
         }
 
         #endregion Common methods
+
+        #region Own data
+
+        /// <summary>
+        /// Load own data
+        /// </summary>
+        private void loadOwnData()
+        {
+            try
+            {
+                company.GetCompany();
+            }
+            catch (Exception ex)
+            {
+                showError("Virhe: Omien tietojen haku ei onnistunut.", "Omat tiedot");
+            }
+        }
+
+        #endregion Own data
 
         #region Customer methods
 
@@ -105,17 +161,24 @@ namespace Harjoitustyo
         private void fillBillObject(ref Bill bill)
         {
             bill.BillNumber = tbBillNumber.Text;
-            bill.DueDate = DateTime.Parse(dueDate.SelectedDate.Value.ToShortDateString());
-            bill.BillDate = DateTime.Parse(billDate.SelectedDate.Value.ToShortDateString());
+
+            if(dueDate.SelectedDate != null)
+                bill.DueDate = DateTime.Parse(dueDate.SelectedDate.Value.ToShortDateString());
+
+            if(billDate.SelectedDate != null)
+                bill.BillDate = DateTime.Parse(billDate.SelectedDate.Value.ToShortDateString());
+
             bill.ReferenceNumber = tbReferenceNumber.Text;
             bill.Reference = tbReference.Text;
             bill.OverdueRate = tbOverdueRate.Text;
 
-            //bill.IBAN
-            //bill.BIC
+            bill.BIC = company.BIC;
+            bill.IBAN = company.IBAN;
 
             UI.ComboBoxItem item = (UI.ComboBoxItem)cbCustomers.SelectedItem;
-            bill.CustomerId = item.Id;
+
+            if (item != null)
+                bill.CustomerId = item.Id;
         }
 
         /// <summary>
@@ -133,6 +196,8 @@ namespace Harjoitustyo
                     Bill bill = new Bill();
                     fillBillObject(ref bill);
                     bill.AddBill();
+
+                    callMainWindow();
                 }
                 else
                 {

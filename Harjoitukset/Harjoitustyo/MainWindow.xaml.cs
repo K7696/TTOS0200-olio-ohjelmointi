@@ -38,6 +38,11 @@ namespace Harjoitustyo
         /// </summary>
         private Product selectedProduct;
 
+        /// <summary>
+        /// Own data
+        /// </summary>
+        private Company company;
+
         #endregion Fields
 
         #region Constructors
@@ -48,6 +53,8 @@ namespace Harjoitustyo
         public MainWindow()
         {
             InitializeComponent();
+
+            company = new Company();
 
             Loaded += MainWindow_Loaded;
         }
@@ -76,6 +83,7 @@ namespace Harjoitustyo
             loadCustomers();
             loadProducts();
             loadBills();
+            loadOwnData();
         }
 
 
@@ -107,8 +115,13 @@ namespace Harjoitustyo
         private void btnNewBillWindow_Click(object sender, RoutedEventArgs e)
         {
             // Open bill window
-            BillWindow bw = new BillWindow();
+            BillWindow bw = new BillWindow(this);
             bw.ShowDialog();
+        }
+
+        public void Call()
+        {
+            loadBills();
         }
 
         #endregion Bill methods
@@ -487,8 +500,87 @@ namespace Harjoitustyo
             }     
         }
 
+
         #endregion Customer methods
 
-        
+        #region Own data
+
+        /// <summary>
+        /// Fill own data form
+        /// </summary>
+        private void fillOwnDataForm()
+        {
+            tbOwnCompany.Text = company.CompanyName;
+            tbContactPerson.Text = company.ContactPersonName;
+            tbOwnBIC.Text = company.BIC;
+            tbOwnIBAN.Text = company.IBAN;
+            tbOwnPhone.Text = company.Phonenumber;
+            tbOwnEMail.Text = company.Email;
+            tbOwnPostalCode.Text = company.Address.PostalCode;
+            tbOwnStreetAdddress.Text = company.Address.StreetAddress;
+            tbOwnCity.Text = company.Address.City;
+        }
+
+        /// <summary>
+        /// Fill company data
+        /// </summary>
+        /// <param name="customer"></param>
+        private void fillCompanyObject()
+        {
+            company.CompanyName = tbOwnCompany.Text;
+            company.ContactPersonName = tbContactPerson.Text;
+            company.BIC = tbOwnBIC.Text;
+            company.IBAN = tbOwnIBAN.Text;
+            company.Phonenumber = tbOwnPhone.Text;
+            company.Email = tbOwnEMail.Text;
+            company.Address.PostalCode = tbOwnPostalCode.Text;
+            company.Address.StreetAddress = tbOwnStreetAdddress.Text;
+            company.Address.City = tbOwnCity.Text;
+        }
+
+        /// <summary>
+        /// Load own data
+        /// </summary>
+        private void loadOwnData()
+        {
+            try
+            {
+                company.GetCompany();
+                fillOwnDataForm();
+            }
+            catch (Exception ex)
+            {
+                showError("Virhe: Omien tietojen haku ei onnistunut.", "Omat tiedot");
+            }
+        }
+
+        /// <summary>
+        /// Save own data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOwnSave_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Set company data
+                fillCompanyObject();
+
+                // Insert new or update existing
+                company.SetCompany();
+                
+                // Read data
+                company.GetCompany();
+
+                // Refresh form
+                fillOwnDataForm();
+            }
+            catch (Exception ex)
+            {
+                showError("Virhe: Omien tietojen tallennus ei onnistunut.", "Omat tiedot");
+            }
+        }
+
+        #endregion Own data
     }
 }

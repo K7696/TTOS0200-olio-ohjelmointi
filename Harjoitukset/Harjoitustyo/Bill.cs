@@ -62,6 +62,11 @@ namespace Harjoitustyo
         public int CustomerId { get; set; }
 
         /// <summary>
+        /// Customer entity
+        /// </summary>
+        public Customer Customer { get; set; }
+
+        /// <summary>
         /// Created
         /// </summary>
         public DateTime Created { get; set; }
@@ -86,6 +91,8 @@ namespace Harjoitustyo
         public Bill()
         {
             database = new Database();
+
+            Customer = new Customer();
         }
 
         #endregion Constructors
@@ -113,6 +120,7 @@ namespace Harjoitustyo
                 Created = DateTime.Parse(dr["Created"].ToString()),
                 Modified = DateTime.Parse(dr["Modified"].ToString()),
                 OverdueRate = dr["OverdueRate"].ToString(),
+                Customer = Customer.ParseCustomerObject(dr)
             };
 
             return bill;
@@ -185,9 +193,9 @@ VALUES(
             {
                 string sql = @"
 SELECT 
-    b.* 
+    b.*
 FROM 
-    Bills b 
+    Bills b
 WHERE 
     b.BillId = ?
 ORDER BY 
@@ -196,6 +204,7 @@ ORDER BY
                 // Add query parameters (Dont change the order of parameters)
                 database.QueryParameters.Add("@BillId", this.BillId);
 
+                // First get bill
                 DataTable dt = database.GetDataTable(sql);
 
                 foreach (DataRow dr in dt.Rows)
@@ -213,6 +222,10 @@ ORDER BY
                     this.Modified = DateTime.Parse(dr["Modified"].ToString());
                     this.OverdueRate = dr["OverdueRate"].ToString();
                 }
+
+                // Then get customer
+                if (this != null)
+                    this.Customer = Customer.GetCustomer(this.CustomerId);
             }
             catch (Exception ex)
             {

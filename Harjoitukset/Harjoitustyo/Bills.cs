@@ -42,24 +42,45 @@ namespace Harjoitustyo
         /// <returns></returns>
         public List<Bill> GetBills()
         {
-            string sql = @"
+            try
+            {
+                string sql = @"
 SELECT 
-    b.* 
+    b.*,
+    c.Company,
+    c.Firstname,
+    c.Lastname,
+    a.*
 FROM 
-    Bills b 
+    Bills b,
+    Customers c,
+    Address a
+WHERE
+    c.CustomerId = b.CustomerId AND
+    c.CustomerId = a.TargetId AND 
+    a.AddressType = ?
 ORDER BY 
     b.BillId ASC";
 
-            DataTable dt = database.GetDataTable(sql);
+                // Add query parameters (Dont change the order of parameters)
+                database.QueryParameters.Add("@AddressType", (int)Enums.AddressType.CustomerAddress);
 
-            Bill bill = new Bill();
+                DataTable dt = database.GetDataTable(sql);
 
-            foreach (DataRow dr in dt.Rows)
-            {
-                this.BillList.Add(bill.ParseBillObject(dr));
+                Bill bill = new Bill();
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    this.BillList.Add(bill.ParseBillObject(dr));
+                }
+
+                return this.BillList;
             }
+            catch (System.Exception ex)
+            {
 
-            return this.BillList;
+                throw;
+            }
         }
     }
 

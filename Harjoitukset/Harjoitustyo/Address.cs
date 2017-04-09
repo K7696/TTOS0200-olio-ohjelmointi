@@ -63,6 +63,25 @@ namespace Harjoitustyo
         #region Public methods
 
         /// <summary>
+        /// Parse address object
+        /// </summary>
+        /// <param name="dr"></param>
+        /// <returns></returns>
+        public Address ParseAddressObject(DataRow dr)
+        {
+            Address address = new Address {
+                AddressId = int.Parse(dr["AddressId"].ToString()),
+                TargetId = int.Parse(dr["TargetId"].ToString()),
+                AddressType = int.Parse(dr["AddressType"].ToString()),
+                StreetAddress = dr["StreetAddress"].ToString(),
+                PostalCode = dr["PostalCode"].ToString(),
+                City = dr["City"].ToString()
+            };
+
+            return address;
+        }
+
+        /// <summary>
         /// Add new address
         /// </summary>
         /// <returns></returns>

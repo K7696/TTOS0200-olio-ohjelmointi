@@ -84,8 +84,8 @@
                             <DataGridTextColumn Header="Tuotenimi" Binding="{Binding ProductName}" />
                             <DataGridTextColumn Header="Arvolisävero %" Binding="{Binding VATPercent}" />
                             <DataGridTextColumn Header="Hinta" Binding="{Binding Price}" />
-                            <DataGridTextColumn Header="Lisätty" Binding="{Binding Created}" />
-                            <DataGridTextColumn Header="Muokattu" Binding="{Binding Modified}" />
+                            <DataGridTextColumn Header="Lisätty" Binding="{Binding Created, StringFormat=d}" />
+                            <DataGridTextColumn Header="Muokattu" Binding="{Binding Modified, StringFormat=d}" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Label x:Name="lblProductHeader" Content="Lisää tuote" HorizontalAlignment="Left" Margin="491,62,0,0" VerticalAlignment="Top" Width="254" FontSize="18"/>
@@ -126,12 +126,18 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" Binding="{Binding BillId}" />
                             <DataGridTextColumn Header="Laskunumero" Binding="{Binding BillNumber}" />
-                            <DataGridTextColumn Header="Eräpäivä" Binding="{Binding DueDate}" />
-                            <DataGridTextColumn Header="Laskupvm" Binding="{Binding BillDate}" />
+                            <DataGridTextColumn Header="Laskupvm" Binding="{Binding BillDate, StringFormat=d}" />
+                            <DataGridTextColumn Header="Eräpäivä" Binding="{Binding DueDate, StringFormat=d}" />
+                            <DataGridTextColumn Header="Yritys" Binding="{Binding Customer.Company}" />
+                            <DataGridTextColumn Header="Etunimi" Binding="{Binding Customer.Firstname}" />
+                            <DataGridTextColumn Header="Sukunimi" Binding="{Binding Customer.Lastname}" />
+                            <DataGridTextColumn Header="Katuosoite" Binding="{Binding Customer.InvoicingAddress.StreetAddress}" />
+                            <DataGridTextColumn Header="Postinumero" Binding="{Binding Customer.InvoicingAddress.PostalCode}" />
+                            <DataGridTextColumn Header="Postitoimipaikka" Binding="{Binding Customer.InvoicingAddress.City}" />
                             <DataGridTextColumn Header="IBAN" Binding="{Binding IBAN}" />
                             <DataGridTextColumn Header="BIC" Binding="{Binding BIC}" />
-                            <DataGridTextColumn Header="Lisätty" Binding="{Binding Created}" />
-                            <DataGridTextColumn Header="Muokattu" Binding="{Binding Modified}" />
+                            <DataGridTextColumn Header="Lisätty" Binding="{Binding Created, StringFormat=d}" />
+                            <DataGridTextColumn Header="Muokattu" Binding="{Binding Modified, StringFormat=d}" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnNewBillWindow" Content="Uusi lasku" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="47" Click="btnNewBillWindow_Click"/>

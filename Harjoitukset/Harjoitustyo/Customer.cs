@@ -50,6 +50,23 @@ namespace Harjoitustyo
         #region Public methods
 
         /// <summary>
+        /// Parse customer object
+        /// </summary>
+        /// <param name="dr"></param>
+        /// <returns></returns>
+        public Customer ParseCustomerObject(DataRow dr)
+        {
+            Customer customer = new Customer {
+                CustomerId = int.Parse(dr["CustomerId"].ToString()),
+                Firstname = dr["Firstname"].ToString(),
+                Lastname = dr["Lastname"].ToString(),
+                InvoicingAddress = InvoicingAddress.ParseAddressObject(dr)
+            };
+
+            return customer;
+        }
+
+        /// <summary>
         /// Save new customer
         /// </summary>
         public void AddCustomer()
@@ -91,6 +108,43 @@ VALUES(
                 throw ex;
             }
             
+        }
+
+        /// <summary>
+        /// Get customer
+        /// </summary>
+        /// <param name="customerId"></param>
+        public Customer GetCustomer(int customerId)
+        {
+            try
+            {
+                Customer customer = new Customer();
+
+                // First get customer
+                string sql = "SELECT * FROM Customers WHERE CustomerId = ?";
+
+                // Add query parameters (Dont change the order of parameters)
+                database.QueryParameters.Add("@CustomerId", customerId);
+
+                DataTable dt = database.GetDataTable(sql);
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    customer.CustomerId = int.Parse(dr["CustomerId"].ToString());
+                    customer.Firstname = dr["Firstname"].ToString();
+                    customer.Lastname = dr["Lastname"].ToString();
+                }
+
+                // Then get address
+                if(customer != null)
+                    customer.InvoicingAddress.GetAddress(customer.CustomerId, (int)Enums.AddressType.CustomerAddress);
+
+                return customer;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>

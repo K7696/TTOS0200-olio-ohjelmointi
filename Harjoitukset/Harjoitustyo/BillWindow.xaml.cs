@@ -36,6 +36,8 @@ namespace Harjoitustyo
         /// </summary>
         private MainWindow parentWindow;
 
+        List<string> validationErrors;
+    
         #endregion Fields
 
         #region Constructors
@@ -82,6 +84,9 @@ namespace Harjoitustyo
             company = new Company();
 
             Loaded += BillWindow_Loaded;
+
+            // Init validation errors list
+            validationErrors = new List<string>();
         }
 
         #endregion Private methods
@@ -119,6 +124,25 @@ namespace Harjoitustyo
         private void showError(string error, string functionName)
         {
             MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(error, functionName, System.Windows.MessageBoxButton.OK);
+        }
+
+        /// <summary>
+        /// Get validation errors
+        /// </summary>
+        /// <returns></returns>
+        private string getErrors()
+        {
+            string error = string.Format("Huomio:{0}", Environment.NewLine);
+
+            foreach (string err in validationErrors)
+            {
+                error += string.Format("{0}{1}", err, Environment.NewLine);
+            }
+
+            // Clear validation errors
+            validationErrors.Clear();
+
+            return error;
         }
 
         #endregion Common methods
@@ -237,9 +261,17 @@ namespace Harjoitustyo
 
             if(dueDate.SelectedDate != null)
                 bill.DueDate = DateTime.Parse(dueDate.SelectedDate.Value.ToShortDateString());
+            else
+            {
+                validationErrors.Add("- Laskulle pitää syöttää eräpäivä.");
+            }
 
             if(billDate.SelectedDate != null)
                 bill.BillDate = DateTime.Parse(billDate.SelectedDate.Value.ToShortDateString());
+            else
+            {
+                validationErrors.Add("- Laskulle pitää syöttää laskutuspäivä.");
+            }
 
             bill.ReferenceNumber = tbReferenceNumber.Text;
             bill.Reference = tbReference.Text;
@@ -253,6 +285,10 @@ namespace Harjoitustyo
 
             if (item != null)
                 bill.CustomerId = item.Id;
+            else
+            {
+                validationErrors.Add("- Laskulle pitää valita asiakas.");
+            }
         }
 
         /// <summary>
@@ -269,16 +305,33 @@ namespace Harjoitustyo
                     // New bill
                     Bill bill = new Bill();
                     fillBillObject(ref bill);
-                    bill.AddBill();
 
-                    // Call parent window for updating list
-                    callMainWindow();
+                    if(validationErrors.Count() == 0)
+                    {
+                        bill.AddBill();
+
+                        // Call parent window for updating list
+                        callMainWindow();
+                    }
+                    else
+                    {
+                        showError(getErrors(), "Laskun lisäys");
+                    }
+                    
                 }
                 else
                 {
                     // Update bill
                     fillBillObject(ref selectedBill);
-                    selectedBill.UpdateBill();
+
+                    if(validationErrors.Count() == 0)
+                    {
+                        selectedBill.UpdateBill();
+                    }
+                    else
+                    {
+                        showError(getErrors(), "Laskun muokkaus");
+                    }
 
                     // Call parent window for updating list
                     callMainWindow();

@@ -70,14 +70,14 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </ApplicationDefinition>
-    <Compile Include="Address.cs" />
-    <Compile Include="Bill.cs" />
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\Bill.cs" />
     <Compile Include="BillWindow.xaml.cs">
       <DependentUpon>BillWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Bills.cs" />
-    <Compile Include="Company.cs" />
-    <Compile Include="Database.cs" />
+    <Compile Include="Models\Bills.cs" />
+    <Compile Include="Models\Company.cs" />
+    <Compile Include="Helpers\Database.cs" />
     <Compile Include="UI\ComboBoxItem.cs" />
     <Page Include="BillWindow.xaml">
       <SubType>Designer</SubType>
@@ -92,18 +92,18 @@
       <SubType>Code</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Customer.cs" />
-    <Compile Include="Customers.cs" />
-    <Compile Include="Enums.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Customers.cs" />
+    <Compile Include="Helpers\Enums.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Person.cs" />
-    <Compile Include="Product.cs" />
-    <Compile Include="Products.cs" />
+    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Products.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

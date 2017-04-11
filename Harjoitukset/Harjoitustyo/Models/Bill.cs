@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace Harjoitustyo
@@ -81,6 +82,11 @@ namespace Harjoitustyo
         /// </summary>
         public string OverdueRate { get; set; }
 
+        /// <summary>
+        /// Bill rows
+        /// </summary>
+        public List<BillRow> BillRows { get; set; }
+
         #endregion Properties
 
         #region Constructors
@@ -93,6 +99,8 @@ namespace Harjoitustyo
             database = new Database();
 
             Customer = new Customer();
+
+            BillRows = new List<BillRow>();
         }
 
         #endregion Constructors
@@ -177,6 +185,16 @@ VALUES(
                 database.QueryParameters.Add("@OverdueRate", this.OverdueRate);
 
                 this.BillId = database.AddNewRecord(sql);
+
+                // Add bill rows
+                if(this.BillRows != null && this.BillRows.Count > 0)
+                {
+                    foreach (BillRow item in BillRows)
+                    {
+                        item.BillId = this.BillId;
+                        item.AddBillRow();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -226,6 +244,15 @@ ORDER BY
                 // Then get customer
                 if (this != null)
                     this.Customer = Customer.GetCustomer(this.CustomerId);
+
+                // Then get billrows
+                if(this != null)
+                {
+                    BillRow billRow = new BillRow();
+
+                    this.BillRows = billRow.GetBillRows(this.BillId);
+                }
+                    
             }
             catch (Exception ex)
             {

@@ -112,6 +112,11 @@ namespace Harjoitustyo
             fillCustomerCombo();
             loadOwnData();
 
+            // Hack: for adding new rows when creating a new bill
+            List<BillRow> list = new List<BillRow>();
+            dgBillRows.ItemsSource = list;
+
+            // If existing bill was double clicked
             if (selectedBill != null)
                 getBill();
         }
@@ -252,6 +257,9 @@ namespace Harjoitustyo
             }
 
             cbCustomers.SelectedItem = list.Where(x => x.Id == selectedBill.CustomerId).FirstOrDefault();
+
+            // Fill bill rows
+            dgBillRows.ItemsSource = selectedBill.BillRows;
         }
 
         /// <summary>
@@ -291,6 +299,15 @@ namespace Harjoitustyo
             else
             {
                 validationErrors.Add("- Laskulle pitää valita asiakas.");
+            }
+
+            // Get bill rows
+            foreach (var row in dgBillRows.Items)
+            {
+                // Row must be type of BillRow
+                if (row.GetType() == typeof(BillRow)){
+                    bill.BillRows.Add((BillRow)row);
+                }
             }
         }
 

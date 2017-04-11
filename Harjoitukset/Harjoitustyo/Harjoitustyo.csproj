@@ -75,6 +75,7 @@
     <Compile Include="BillWindow.xaml.cs">
       <DependentUpon>BillWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\BillRow.cs" />
     <Compile Include="Models\Bills.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Helpers\Database.cs" />

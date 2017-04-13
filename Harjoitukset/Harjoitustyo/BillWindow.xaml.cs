@@ -408,5 +408,7 @@ namespace Harjoitustyo
         }
 
         #endregion Bill methods
+
+
     }
 }

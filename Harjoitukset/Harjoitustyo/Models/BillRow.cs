@@ -57,6 +57,11 @@ namespace Harjoitustyo
         /// </summary>
         public string Quantity { get; set; }
 
+        /// <summary>
+        /// true = delete row, false = keep row
+        /// </summary>
+        public bool DeleteRow { get; set; }
+
         #endregion Properties
 
         #region Constructors

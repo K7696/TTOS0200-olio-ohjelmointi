@@ -60,6 +60,7 @@
                 <DataGridTextColumn Header="ALV" Binding="{Binding }" />
                 <DataGridTextColumn Header="Summa" Binding="{Binding }" />
                 -->
+                <DataGridCheckBoxColumn Header="Poista" Binding="{Binding DeleteRow, UpdateSourceTrigger=PropertyChanged}"></DataGridCheckBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

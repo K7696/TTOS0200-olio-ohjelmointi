@@ -304,9 +304,11 @@ WHERE
                 {
                     foreach (BillRow item in BillRows)
                     {
-                        if (item.BillRowId > 0)
+                        if (item.BillRowId > 0 && item.DeleteRow == false)
                             item.UpdateBillRow();
-                        else
+                        else if (item.BillRowId > 0 && item.DeleteRow == true)
+                            item.DeleteBillRow();
+                        else if (item.BillRowId < 1 && item.DeleteRow == false)
                         {
                             item.BillId = this.BillId;
                             item.AddBillRow();

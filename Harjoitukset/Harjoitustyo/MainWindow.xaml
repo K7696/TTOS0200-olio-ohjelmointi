@@ -6,14 +6,26 @@
         xmlns:local="clr-namespace:Harjoitustyo"
         mc:Ignorable="d"
         Title="Talous" Height="600" Width="800">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="0.007"/>
+            <GradientStop Color="#FF7F7FD3" Offset="0.051"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid Margin="0,115,0,11">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="19*"/>
             <ColumnDefinition Width="377*"/>
         </Grid.ColumnDefinitions>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="546" Margin="10,-103,0,0" VerticalAlignment="Top" Width="761" Grid.ColumnSpan="2">
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="546" Margin="10,-103,0,0" VerticalAlignment="Top" Width="761" Grid.ColumnSpan="2" Background="#FFF9F6F6">
             <TabItem Header="Asiakasrekisteri">
-                <Grid Background="#FFE5E5E5" Margin="0,-3,0,0">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="#FFF9F6F6" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="#FFFBFAFA" Margin="0,-3,0,0">
 
                     <DataGrid x:Name="dataGrid" 
                       ItemsSource="{Binding Customers}" 
@@ -64,7 +76,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Tuoterekisteri">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFF9F6F6">
                     <DataGrid x:Name="dgProducts" 
                               ItemsSource="{Binding Products}" 
                               MouseDoubleClick="ProductRow_MouseDoubleClick"
@@ -110,7 +122,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Myyntilaskut">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFF9F6F6">
                     <DataGrid x:Name="dgBills" ItemsSource="{Binding Bills}" 
                               MouseDoubleClick="BillRow_MouseDoubleClick"
                               AutoGenerateColumns="False"

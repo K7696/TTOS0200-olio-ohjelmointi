@@ -298,6 +298,21 @@ WHERE
                 database.QueryParameters.Add("@BillId", this.BillId);
 
                 database.UpdateRecord(sql);
+
+                // Add/update bill rows
+                if (this.BillRows != null && this.BillRows.Count > 0)
+                {
+                    foreach (BillRow item in BillRows)
+                    {
+                        if (item.BillRowId > 0)
+                            item.UpdateBillRow();
+                        else
+                        {
+                            item.BillId = this.BillId;
+                            item.AddBillRow();
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -312,12 +327,23 @@ WHERE
         {
             try
             {
-                string sql = "DELETE FROM Bills WHERE BillId = ?";
+                string sql = @"
+DELETE FROM 
+    Bills 
+WHERE 
+    BillId = ?";
 
                 // Add query parameters (Dont change the order of parameters)
                 database.QueryParameters.Add("@BillId", this.BillId);
 
                 database.DeleteRecord(sql);
+
+                if(this.BillRows.Count > 0)
+                {
+                    BillRow billRow = new BillRow();
+                    billRow.DeleteBillRowsByBillId(this.BillId);
+                }
+
             }
             catch (Exception ex)
             {

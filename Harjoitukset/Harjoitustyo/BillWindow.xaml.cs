@@ -266,7 +266,8 @@ namespace Harjoitustyo
         /// Fill bill object
         /// </summary>
         /// <param name="bill"></param>
-        private void fillBillObject(ref Bill bill)
+        /// <param name="action"></param>
+        private void fillBillObject(ref Bill bill, Enums.Action action)
         {
             bill.BillNumber = tbBillNumber.Text;
 
@@ -301,14 +302,8 @@ namespace Harjoitustyo
                 validationErrors.Add("- Laskulle pitää valita asiakas.");
             }
 
-            // Get bill rows
-            foreach (var row in dgBillRows.Items)
-            {
-                // Row must be type of BillRow
-                if (row.GetType() == typeof(BillRow)){
-                    bill.BillRows.Add((BillRow)row);
-                }
-            }
+            // Bill rows
+            bill.BillRows = dgBillRows.ItemsSource as List<BillRow>;                
         }
 
         /// <summary>
@@ -324,7 +319,7 @@ namespace Harjoitustyo
                 {
                     // New bill
                     Bill bill = new Bill();
-                    fillBillObject(ref bill);
+                    fillBillObject(ref bill, Enums.Action.Insert);
 
                     if(validationErrors.Count() == 0)
                     {
@@ -333,6 +328,9 @@ namespace Harjoitustyo
                         // Get added bill
                         bill.GetBill();
                         selectedBill = bill;
+
+                        // Reset form
+                        fillBillForm();
 
                         // Call parent window for updating list
                         callMainWindow();
@@ -346,11 +344,17 @@ namespace Harjoitustyo
                 else
                 {
                     // Update bill
-                    fillBillObject(ref selectedBill);
+                    fillBillObject(ref selectedBill, Enums.Action.Update);
 
                     if(validationErrors.Count() == 0)
                     {
                         selectedBill.UpdateBill();
+
+                        // Get updated bill
+                        selectedBill.GetBill();
+
+                        // Reset form
+                        fillBillForm();
                     }
                     else
                     {
@@ -368,7 +372,41 @@ namespace Harjoitustyo
             }
         }
 
-        #endregion Bill methods
+        /// <summary>
+        /// Delete bill
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedBill == null)
+            {
+                showError("Laskua ei voida poistaa, koska sitä ei ole tallennettu.", "Laskun poisto");
+            }
+            else
+            {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Haluatko varmasti poistaa laskun?", "Laskun poisto", System.Windows.MessageBoxButton.YesNo);
 
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        // Delete bill
+                        selectedBill.DeleteBill();
+                        selectedBill = null;
+                        // Call parent window
+                        callMainWindow();
+                        // Close this window
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        showError("Virhe: Laskun poisto ei onnistunut.", "Laskun poisto");
+                    }
+                }
+            }
+        }
+
+        #endregion Bill methods
     }
 }

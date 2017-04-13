@@ -6,16 +6,28 @@
         xmlns:local="clr-namespace:Harjoitustyo"
         mc:Ignorable="d"
         Title="Lasku" Height="600" Width="700">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="0"/>
+            <GradientStop Color="#FF7F7FD3" Offset="0.081"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
-        <Grid HorizontalAlignment="Left" Height="193" Margin="10,0,0,0" VerticalAlignment="Top" Width="672">
-            <TextBox x:Name="tbReferenceNumber" HorizontalAlignment="Left" Height="23" Margin="485,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177"/>
-            <Label x:Name="lblReferenceNumber" Content="Viitenumero:" HorizontalAlignment="Left" Margin="390,91,0,0" VerticalAlignment="Top" Width="90"/>
-            <TextBox x:Name="tbReference" HorizontalAlignment="Left" Height="61" Margin="485,122,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177"/>
-            <Label x:Name="lblReference" Content="Viitteenne:" HorizontalAlignment="Left" Margin="390,137,0,0" VerticalAlignment="Top" Width="90"/>
-            <TextBox x:Name="tbOverdueRate" HorizontalAlignment="Left" Height="23" Margin="485,63,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177"/>
-            <Label x:Name="lblOverdueRate" Content="Viivästyskorko:" HorizontalAlignment="Left" Margin="390,63,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="-0.144,0.577"/>
-            <TextBox x:Name="tbBillNumber" HorizontalAlignment="Left" Height="23" Margin="485,35,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177"/>
-            <Label x:Name="lblBillNumber" Content="Laskunumero:" HorizontalAlignment="Left" Margin="390,35,0,0" VerticalAlignment="Top" Width="90"/>
+        <Grid HorizontalAlignment="Left" Height="192" Margin="10,29,0,0" VerticalAlignment="Top" Width="662">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0"/>
+                    <GradientStop Color="#FFF9F6F6"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <TextBox x:Name="tbReferenceNumber" HorizontalAlignment="Left" Height="23" Margin="475,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177"/>
+            <Label x:Name="lblReferenceNumber" Content="Viitenumero:" HorizontalAlignment="Left" Margin="368,91,0,0" VerticalAlignment="Top" Width="90"/>
+            <TextBox x:Name="tbReference" HorizontalAlignment="Left" Height="61" Margin="475,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177"/>
+            <Label x:Name="lblReference" Content="Viitteenne:" HorizontalAlignment="Left" Margin="368,137,0,0" VerticalAlignment="Top" Width="90"/>
+            <TextBox x:Name="tbOverdueRate" HorizontalAlignment="Left" Height="23" Margin="475,63,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177"/>
+            <Label x:Name="lblOverdueRate" Content="Viivästyskorko:" HorizontalAlignment="Left" Margin="368,61,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="-0.144,0.577"/>
+            <TextBox x:Name="tbBillNumber" HorizontalAlignment="Left" Height="23" Margin="475,35,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177"/>
+            <Label x:Name="lblBillNumber" Content="Laskunumero:" HorizontalAlignment="Left" Margin="368,35,0,0" VerticalAlignment="Top" Width="90"/>
             <ComboBox x:Name="cbCustomers" HorizontalAlignment="Left" Margin="83,35,0,0" VerticalAlignment="Top" Width="277"/>
             <Label x:Name="lblCustomers" Content="Asiakas:" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="68" RenderTransformOrigin="0.515,1.385"/>
             <Button x:Name="btnSave" Content="Tallenna" HorizontalAlignment="Left" Margin="10,137,0,0" VerticalAlignment="Top" Width="126" Height="46" Click="btnSave_Click"/>
@@ -23,6 +35,7 @@
             <DatePicker Name="dueDate" HorizontalAlignment="Left" Margin="83,91,0,0" VerticalAlignment="Top"/>
             <Label x:Name="lblBillDate" Content="Lasku pvm:" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top" Width="68"/>
             <Label x:Name="lblDueDate" Content="Eräpäivä:" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top" Width="68"/>
+            <Button x:Name="btnDelete" Content="Poista lasku" HorizontalAlignment="Left" Margin="156,139,0,0" VerticalAlignment="Top" Width="75" Height="43" Click="btnDelete_Click"/>
         </Grid>
         <DataGrid 
             x:Name="dgBillRows"
@@ -32,10 +45,10 @@
             CanUserDeleteRows="True"
             HorizontalAlignment="Left" 
             IsReadOnly="False"
-            Margin="10,198,0,0" 
+            Margin="10,226,0,0" 
             VerticalAlignment="Top" 
-            Width="672" 
-            Height="361">
+            Width="662" 
+            Height="333">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Tuotenumero" Binding="{Binding ProductNumber}" />
                 <DataGridTextColumn Header="Tuote" Binding="{Binding ProductName}" />

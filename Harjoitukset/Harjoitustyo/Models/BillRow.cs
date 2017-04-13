@@ -103,11 +103,11 @@ VALUES(
                 // Add query parameters (Dont change the order of parameters)
                 database.QueryParameters.Add("@BillId", this.BillId);
                 database.QueryParameters.Add("@ProductId", this.ProductId);
-                database.QueryParameters.Add("@ProductName", this.ProductName);
-                database.QueryParameters.Add("@VATPercent", this.VATPercent);
-                database.QueryParameters.Add("@Price", this.Price);
-                database.QueryParameters.Add("@Quantity", this.Quantity);
-                database.QueryParameters.Add("@ProductNumber", this.ProductNumber);
+                database.QueryParameters.Add("@ProductName", this.ProductName?? "");
+                database.QueryParameters.Add("@VATPercent", this.VATPercent?? "");
+                database.QueryParameters.Add("@Price", this.Price ?? "");
+                database.QueryParameters.Add("@Quantity", this.Quantity?? "");
+                database.QueryParameters.Add("@ProductNumber", this.ProductNumber?? "");
 
                 int billRowId = database.AddNewRecord(sql);
             }
@@ -216,6 +216,30 @@ WHERE
 
                 // Add query parameters (Dont change the order of parameters)
                 database.QueryParameters.Add("@BillRowId", this.BillRowId);
+
+                database.DeleteRecord(sql);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Delete bill rows by bill id
+        /// </summary>
+        public void DeleteBillRowsByBillId(int billId)
+        {
+            try
+            {
+                string sql = @"
+DELETE FROM 
+    BillRow
+WHERE 
+    BillId = ?";
+
+                // Add query parameters (Dont change the order of parameters)
+                database.QueryParameters.Add("@BillId", billId);
 
                 database.DeleteRecord(sql);
             }

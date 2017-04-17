@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Olio-ohjelmointi : TTOS0200 (5op)</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+<div id="begin" class="w3-margin-left w3-container">
+<!--
+1. Harjoitustyön nimi, tekijöiden nimet, päivämäärä ja tieto siitä, minkä opintojakson harjoitustyö on kyseessä.
+- Ok
+2. Linkki projektin lähdekoodeihin (esim. GitHub-osoite) ja ohjeet sovelluksen käyttöönottoon ja testaamiseen
+- Ok
+3. Linkki kaiken harjoitustyöaineiston (lähdekoodit, dokumentaatiot, ...) sisältävään zip-pakettiin.
+- Ok
+4. Sisällysluettelo
+- Kesken
+5. Tehtävän/sovelluksen yleiskuvaus
+- Tarkenna vähän
+6. Käyttöympäristö ja käytetyt teknologiat
+- Tarkenna vähän
+7. Käytännön toteutuksen selostus (Muista kertoa ajatuksista, pelkät kaaviot eivät ole aina riittäviä) mm.
+	A: Sovelluksen kokonaisrakenne (mielellään myös graafisesti, jos mahdollista)
+	B: Rakennekaavio
+
+	- Luokkakaavio sovelluksesta, mitä luokkia sovelluksessa on ja niiden tärkeimmät tehtävät ja ominaisuudet 
+	sekä luokkien väliset suhteet, UML
+
+	- Mahdolliset suunnitteluvaiheen kaaviot ja perustelut muutoksille
+
+8. Mahdollisesti tietovarastojen kuvaus: tiedostot, tietokannat, ulkoiset tietolähteet, ...
+- ok
+9. Työaikaraportti, mitä tehtiin ja milloin, kuka teki ja paljonko meni resursseja (tämä selviää kaikilta)
+10. Mahdollisesti lopullisen version näyttökaappaukset ja kerronta näytöistä
+- ok
+11. Keskeisimmät ongelmat, mitä oli ja miten ratkaistiin
+12. Testaus, miten sovellusta on testattu
+- Tarkenna
+13. Itsearviointi, arvosanaehdotus harjoitustyöstä perusteluineen
+-->
+
+<div id="top" class="w3-container">
+	<h1>Harjoitustyön dokumentti</h1>
+	<h2><b>Kurssi:</b> Olio-ohjelmointi : TTOS0200 (5op)</h2>
+	<h3><b>Päivämäärä:</b> 23.04.2017</h3>
+	<h3><b>Tekijä:</b> Pasi Reini</h3>
+</div>
+
+<div id="short-intro" class="w3-container">
+Tällä sivulla kuvataan kurssin Olio-ohjelmointi : TTOS0200 (5op) harjoitustyön
+sisältö.
+</div>
+
+<div id="links" class="w3-container">
+	<h3>Linkit</h3>
+	<a href="https://github.com/K7696/TTOS0200-olio-ohjelmointi/tree/master/Harjoitukset/Harjoitustyo/pasi_reini_k7696.zip">Harjoitustyön zippi</a>
+	<br />
+	<a href="https://github.com/K7696/TTOS0200-olio-ohjelmointi/tree/master/Harjoitukset/Harjoitustyo">Lähdekoodi (GitHub)</a>
+</div>
+
+<div id="content-list" class="w3-container">
+	<h3>Sisältö</h3>
+	<ul class="w3-ul">
+		<li><a href="#general-overview">1. Sovelluksen yleiskuvaus</a></li>
+		<li><a href="#technologies">2. Käyttöympäristö ja käytetyt teknologiat</a></li>
+		<li><a href="#database">3. Tietovarasto</a></li>
+		<li><a href="#structure">4. Ohjelman rakenne</a></li>
+		<li><a href="#screenshots">6. Näyttökaappaukset</a></li>
+		<li><a href="#testing">7. Testaus</a></li>
+		<li><a href="#future">8. Jatkokehitys</a></li>
+		<li><a href="#working-report">9. Työaikaraportti</a></li>
+		<li><a href="#self-evaluating">10. Itsearviointi</a></li>
+	</ul>
+</div>
+<br /> <br />
+<div class="w3-container" id="general-overview">
+	<h3>1. Sovelluksen yleiskuvaus</h3>
+	<p>
+		Sovelluksella on tarkoitus helpottaa pienten yritysten laskutusta. Pienissä yrityksissä on monesti vain yksi henkilö, kuka 
+		hoitaa myyntilaskutusta. Ohjelmassa on asiakas- ja tuoterekisteri ja sillä voi tehdä myyntilaskuja, jotka säilyvät ohjelmassa tallessa. 
+		Sovelluksessa ei ole tarpeen tunnistaa käyttäjiä.
+	</p>
+	<p>
+		Taustana tälle työlle on korvata vanha reikänen PHP ja MySQL -sovellus, jotta voidaan irtisanoa tietoturvaton web-hotellipalvelu. 
+		Lisäksi asiakas ei välttämättä tarvitse internet-yhteyttä ohjelman käyttöä varten.
+	</p>
+	<div class="w3-container">
+		<a href="#content-list">Takaisin sisällysluetteloon...</a>
+	</div>
+</div>
+
+<div class="w3-container" id="technologies">
+	<h3>2. Käyttöympäristö ja käytetyt teknologiat</h3>
+	<p>
+		Ohjelmaa tullaan käyttämään työpöytäsovelluksena ja se asennetaan toimimaan yhteen tietokoneeseen, mitä laskuja tekevä henkilö käyttää työpaikallaan.
+	</p>
+	<p>
+		<b>Käytetyt teknologiat:</b> WPF ja C#
+	</p>
+	<div class="w3-container">
+		<a href="#content-list">Takaisin sisällysluetteloon...</a>
+	</div>
+</div>
+
+<div class="w3-container" id="database">
+	<h3>3. Tietovarasto</h3>
+	<p>
+		Sovelluksen tietovarastona käytetään Microsoft Access-tietokantaa, mikä tulee samalle koneelle asennettuna kuin itse sovellus. 
+		Tietokannaksi valittiin Access, koska ei haluttu lähteä toteuttamaan turhan monimutkaista tietokantahallintaa. Eikä haluttu tallentaa 
+		tietoja minnekään internetissä olevalle palvelimelle, mikä altistaisi datan hakkeroitavaksi.
+	</p>
+	<p>
+		Tietokantaa varten pitää asentaa pari pakettia työasemalle:
+		<br />
+		1. Microsoft Access Database Engine 2010 Redistributable 
+		<a href="https://www.microsoft.com/en-us/download/details.aspx?id=13255">Hae paketti...</a>
+		<br />
+		2. 2007 Office System Driver: Data Connectivity Components
+		<a href="https://www.microsoft.com/en-us/download/details.aspx?id=23734">Hae paketti...</a>
+	</p>
+	<p>
+		<b>Tietokantakaavio:</b><br />
+		<a href="tietokanta.jpg" target="_blank"><img src="tietokanta.jpg" class="w3-round" alt="tietokantakaavio" /></a>
+	</p>
+	<p>
+		<b>Taulut:</b><br />
+		<p>
+			<b>- Address: </b>Osoitteet
+		</p>
+		<p>
+			<b>- BillRow: </b>Laskun tuottorivit
+		</p>
+		<p>
+			<b>- Bills: </b>Laskut 
+		</p>
+		<p>
+			<b>- Company: </b>Yrityksen omat tiedot
+		</p>
+		<p>
+			<b>- Customers: </b>Asiakasrekisteri
+		</p>
+		<p>
+			<b>- Products: </b>Tuoterekisteri
+		</p>
+	</p>
+	<div class="w3-container">
+		<a href="#content-list">Takaisin sisällysluetteloon...</a>
+	</div>
+</div>
+
+<div class="w3-container" id="structure">
+	<h3>4. Ohjelman rakenne</h3>
+	<p>
+		<b>Luokkakaavio:</b><br />
+		<img src="UML.png" alt="img" />
+	</p>
+	<div class="w3-container">
+		<a href="#content-list">Takaisin sisällysluetteloon...</a>
+	</div>
+</div>
+
+<div class="w3-container" id="screenshots">
+	<h3>6. Näyttökaappaukset</h3>
+	<p>
+		Ohjelma lataa käynnistyessään tuotteet, asiakkaat, laskut ja omat tiedot tietokannasta.
+	</p>
+	<p>
+		<b>Asiakasrekisteri:</b><br />
+		<p>
+			Näkymässä voidaan tarkastella järjestelmään tallennettuja asiakkaita ja sortata sarakeotsikoiden mukaan sekä
+			filtteroida tuloksia sukunimen perusteella. 
+			Lisäksi voidaan perustaa uusia, muokata (tuplaklikkaa asiakasriviä) ja poistaa olemassa olevia asiakkaita.
+		</p>
+		<img src="asiakasrekisteri.jpg" alt="img" />
+	</p>
+	<p>
+		<b>Tuoterekisteri:</b><br />
+		<p>
+			Näkymässä voidaan tarkastella järjestelmään tallennettuja tuotteita ja sortata sarakeotsikoiden mukaan.
+			Lisäksi voidaan perustaa uusia, muokata (tuplaklikkaa tuoteriviä) ja poistaa olemassa olevia tuotteita.
+		</p>
+		<img src="tuoterekisteri.jpg" alt="img" />
+	</p>
+	<p>
+		<b>Myyntilaskut:</b><br />
+		<p>
+			Näkymässä nähdään järjestelmään tallennetut laskut, joita voidaa sorttailla sarakeotsikoiden mukaan. 
+			Lisäksi näkymästä pääsee lisäämään laskuja painamalla Uusi lasku -painiketta tai muokkaamaan laskua 
+			tuplaklikkaamalla laskuriviä.
+		</p>
+		<img src="laskut.jpg" alt="img" />
+	</p>
+	<p>
+		<b>Uuden laskun perustaminen:</b><br />
+		<p>Näkymässä voidaan perustaa uusi lasku antamalla laskun perustiedot tai muokata olemassa olevaa laskua (yläosa) 
+		ja sitten lisätä laskulle tuottorivejä tai muokata olemassa olevien rivien tietoja. Laskulta voidaan myös 
+		poistaa rivejä valitsemalla checkboxeja. Näkymässä voidaa myös poistaalasku tarvittaessa.
+		</p>
+		<img src="uusi-lasku.jpg" alt="img" />
+	</p>
+	<p>
+		<b>Omat tiedot:</b><br />
+		<p>Näkymässä yritys voi tallentaa omat tietonsa esim. laskun tietoja varten.</p>
+		<img src="omat-tiedot.jpg" alt="img" />
+	</p>
+	<div class="w3-container">
+		<a href="#content-list">Takaisin sisällysluetteloon...</a>
+	</div>
+</div>
+
+<div class="w3-container" id="testing">
+	<h3>7. Testaus</h3>
+	<p>
+		Testausta on tehty vain käyttöliittymästä savutestaamalla toiminnot. Ei ole mitään kunnollista testausprosessia käyty läpi.
+	</p>
+	<div class="w3-container">
+		<a href="#content-list">Takaisin sisällysluetteloon...</a>
+	</div>
+</div>
+
+<div class="w3-container" id="future">
+	<h3>8. Jatkokehitys</h3>
+	<p>
+		<b>Puutteita:</b><br />
+		- Laskun tulostustoiminto puuttuu vielä kokonaan.
+		<br />
+		- Laskulle viitenumeron generointi ja tarkastus.
+		<br />
+		- Laskulle oletustietojen mahdollistaminen per asiakas, ettei tarvitse aina samoja tietoja syöttää uudestaan.
+		<br />
+		- Combobox laskun tuoteriveille, jotta voidaan valita järjestelmään tallennettu tuote laskulle.
+	</p>
+	<p>
+		<b>Koodin refaktrointi:</b><br />
+		Koodia refaktoroimalla saisi varmasti tiputettua koodin määrää ja tehtyä yleiskäyttöisempiä komponentteja.
+	</p>
+	<p>
+		<b>Käyttöliittymä:</b><br />
+		Käyttöliittymän tulisi toimia samalla tavalla joka paikassa. Nyt asiakasrekisterissä ja tuoterekisterissä on lomake 
+		listan oikealla puolella. Syynä tähän on kerättävien tietojen vähyys. Jos tulee enemmän kenttiä lomakkeille, niin 
+		lomake on eriytettävä omalle ikkunalleen, kuten on laskun kanssa tehty. Listojen filtterointia on myös mahdollistettava 
+		useampiin kenttiin.
+	</p>
+	<p>
+		<b>Käyttäjätunnistus:</b><br />
+		Järjestelmän tulisi tunnistaa käyttäjä, jotta voitaisiin jäljittää mitä kukakin on järjestelmässä tehnyt.
+	</p>
+	<p>
+		<b>Tietokanta:</b><br />
+		Tietokannan tulisi sijaita erillisellä palvelimella, johon client ottaa yhteyttä esim. Web API -rajapinnan kautta. Nyt tietokanta on samalla koneella 
+		clientin kanssa. Samalla voitaisiin Access-tietokanta korvata jollain toisella tietokannalla, kuten MySQL:lla. Tällöin 
+		voitaisiin toteuttaa tietokanta siten, että useat käyttäjäyritykset käyttäisivät samaa tietokantaa keskitetysti yhdestä 
+		endpointista.
+	</p>
+	<p>
+		<b>Automaatiotestaus:</b><br />
+		Yksikkö- ja integraatiotestaus olisi hyvä toteuttaa automaattitestien avulla siten, että jos esim. johonkin luokkaan tulee muutos, 
+		niin voidaan testit ajamalla validoida, että rikkooko tehty muutos jotain toiminnallisuutta.
+	</p>
+	<div class="w3-container">
+		<a href="#content-list">Takaisin sisällysluetteloon...</a>
+	</div>
+</div>
+
+<div class="w3-container" id="working-report">
+	<h3>9. Työaikaraportti</h3>
+	<p>
+		Toteutin tämän harjoitustyön kokonaan yksin ja siihen meni ainakin 40 tuntia.
+	</p>
+	<div class="w3-container">
+		<a href="#content-list">Takaisin sisällysluetteloon...</a>
+	</div>
+</div>
+
+<div class="w3-container" id="self-evaluating">
+	<h3>10. Itsearviointi</h3>
+	<p>
+	
+	</p>
+	<div class="w3-container">
+		<a href="#content-list">Takaisin sisällysluetteloon...</a>
+	</div>
+</div>
+<br /><br />
+<div class="w3-container">
+<a href="#begin">Takaisin ylös...</a>
+</div>
+
+
+<!-- Master div end -->
+</div> 
+</body>
+</html>

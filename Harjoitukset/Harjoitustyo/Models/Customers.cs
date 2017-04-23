@@ -4,7 +4,7 @@ using System.Data;
 
 namespace Harjoitustyo
 {
-    public class Customers : ObservableCollection<Customer>
+    public class Customers //: ObservableCollection<Customer>
     {
         #region Fields
 

@@ -5,7 +5,7 @@ using System.Data;
 
 namespace Harjoitustyo
 {
-    class Products : ObservableCollection<Product>
+    class Products //: ObservableCollection<Product>
     {
         #region Fields
 

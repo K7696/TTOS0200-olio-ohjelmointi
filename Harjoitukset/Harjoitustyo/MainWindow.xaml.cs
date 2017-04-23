@@ -172,6 +172,28 @@ namespace Harjoitustyo
         }
 
         /// <summary>
+        /// Filter product list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tbProductFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox t = (TextBox)sender;
+            string filter = t.Text;
+            ICollectionView cv = CollectionViewSource.GetDefaultView(dgProducts.ItemsSource);
+            if (filter == "")
+                cv.Filter = null;
+            else
+            {
+                cv.Filter = o =>
+                {
+                    Product p = o as Product;
+                    return (p.ProductName.ToUpper().Contains(filter.ToUpper()));
+                };
+            }
+        }
+
+        /// <summary>
         /// Save product
         /// </summary>
         /// <param name="sender"></param>
@@ -353,7 +375,7 @@ namespace Harjoitustyo
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void txtName_TextChanged(object sender, TextChangedEventArgs e)
+        private void tbCustomerFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox t = (TextBox)sender;
             string filter = t.Text;
@@ -365,8 +387,6 @@ namespace Harjoitustyo
                 cv.Filter = o =>
                 {
                     Customer p = o as Customer;
-                    if (t.Name == "txtId")
-                        return (p.CustomerId == Convert.ToInt32(filter));
                     return (p.Lastname.ToUpper().Contains(filter.ToUpper()));
                 };
             }

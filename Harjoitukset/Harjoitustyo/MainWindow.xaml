@@ -25,7 +25,11 @@
                         <GradientStop Color="#FFF9F6F6" Offset="1"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
-                <Grid Background="#FFFBFAFA" Margin="0,-3,0,0">
+                <Grid Background="#FFFBFAFA" Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="139*"/>
+                        <ColumnDefinition Width="616*"/>
+                    </Grid.ColumnDefinitions>
 
                     <DataGrid x:Name="dataGrid" 
                       ItemsSource="{Binding Customers}" 
@@ -36,7 +40,7 @@
                       CanUserAddRows="False" 
                       HorizontalAlignment="Left" 
                       Margin="10,62,0,0" 
-                      VerticalAlignment="Top" Height="449" Width="476" RenderTransformOrigin="0.507,0.66">
+                      VerticalAlignment="Top" Height="449" Width="476" RenderTransformOrigin="0.507,0.66" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" Binding="{Binding CustomerId}" />
                             <DataGridTextColumn Header="Yritys" Binding="{Binding Company}" />
@@ -49,30 +53,30 @@
                             <DataGridTextColumn Header="Puhelin" Binding="{Binding Phonenumber}" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <TextBox x:Name="textBox" TabIndex="1" HorizontalAlignment="Left" Height="23" Margin="140,34,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="txtName_TextChanged" />
-                    <Label x:Name="label" Content="Suodata sukunimellä:" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" Width="125"/>
-                    <TextBox x:Name="tbCompany" TabIndex="2" HorizontalAlignment="Left" Height="23" Margin="596,121,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
-                    <Label x:Name="lblCompany" Content="Yritys:" HorizontalAlignment="Left" Margin="491,121,0,0" VerticalAlignment="Top" Width="65"/>
-                    <TextBox x:Name="tbFirstname" TabIndex="3" HorizontalAlignment="Left" Height="23" Margin="596,149,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
-                    <Label x:Name="lblFirstname" Content="Etunimi:" HorizontalAlignment="Left" Margin="491,149,0,0" VerticalAlignment="Top" Width="65"/>
-                    <TextBox x:Name="tbLastname" TabIndex="4" HorizontalAlignment="Left" Height="23" Margin="596,177,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
-                    <Label x:Name="lblLastname" Content="Sukunimi:" HorizontalAlignment="Left" Margin="491,177,0,0" VerticalAlignment="Top" Width="65"/>
-                    <Label x:Name="lblCustomerHeader" Content="Lisää asiakas" HorizontalAlignment="Left" Margin="491,62,0,0" VerticalAlignment="Top" Width="254" FontSize="18"/>
-                    <TextBox x:Name="tbStreetAddress" TabIndex="5" HorizontalAlignment="Left" Height="23" Margin="596,205,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
-                    <Label x:Name="lblStreetAddress" Content="Katuosoite:" HorizontalAlignment="Left" Margin="491,205,0,0" VerticalAlignment="Top" Width="72"/>
-                    <TextBox x:Name="tbPostalCode" TabIndex="6" HorizontalAlignment="Left" Height="23" Margin="596,233,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
-                    <Label x:Name="lblPostalCode" Content="Postinumero:" HorizontalAlignment="Left" Margin="491,233,0,0" VerticalAlignment="Top" Width="86"/>
-                    <TextBox x:Name="tbCity" TabIndex="7" HorizontalAlignment="Left" Height="23" Margin="596,261,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
-                    <Label x:Name="lblCity" Content="Postitoimipaikka:" HorizontalAlignment="Left" Margin="491,261,0,0" VerticalAlignment="Top" Width="100"/>
-                    <TextBox x:Name="tbPhonenumber" TabIndex="8" HorizontalAlignment="Left" Height="23" Margin="596,289,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
-                    <Label x:Name="lblPhonenumber" Content="Puhelin:" HorizontalAlignment="Left" Margin="491,288,0,0" VerticalAlignment="Top" Width="100"/>
-                    <TextBox x:Name="tbEmail" TabIndex="9" HorizontalAlignment="Left" Height="23" Margin="596,317,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149"/>
-                    <Label x:Name="lblEmail" Content="Sähköposti:" HorizontalAlignment="Left" Margin="491,314,0,0" VerticalAlignment="Top" Width="86"/>
-                    <Button x:Name="btnSave" Content="Tallenna" HorizontalAlignment="Left" Margin="491,353,0,0" VerticalAlignment="Top" Width="136" Height="45" Click="btnSave_Click"/>
-                    <Button x:Name="btnDelete" Content="Poista" HorizontalAlignment="Left" Margin="691,353,0,0" VerticalAlignment="Top" Width="54" Height="45" Click="btnDelete_Click"/>
-                    <Button x:Name="btnCancel" Content="Tyhjennä" HorizontalAlignment="Left" Margin="632,353,0,0" VerticalAlignment="Top" Width="54" Height="45" Click="btnCancel_Click"/>
-                    <Label x:Name="lblIdHeader" Content="Id:" HorizontalAlignment="Left" Margin="491,95,0,0" VerticalAlignment="Top" Width="65"/>
-                    <Label x:Name="lblId" Content="" HorizontalAlignment="Left" Margin="596,95,0,0" VerticalAlignment="Top" Width="149"/>
+                    <TextBox x:Name="tbCustomerFilter" TabIndex="1" HorizontalAlignment="Left" Height="23" Margin="1,34,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="tbCustomerFilter_TextChanged" Grid.Column="1" />
+                    <Label x:Name="lblCustomerFilter" Content="Suodata sukunimellä:" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" Width="125"/>
+                    <TextBox x:Name="tbCompany" TabIndex="2" HorizontalAlignment="Left" Height="23" Margin="457,121,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149" Grid.Column="1"/>
+                    <Label x:Name="lblCompany" Content="Yritys:" HorizontalAlignment="Left" Margin="352,121,0,0" VerticalAlignment="Top" Width="65" Grid.Column="1"/>
+                    <TextBox x:Name="tbFirstname" TabIndex="3" HorizontalAlignment="Left" Height="23" Margin="457,149,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149" Grid.Column="1"/>
+                    <Label x:Name="lblFirstname" Content="Etunimi:" HorizontalAlignment="Left" Margin="352,149,0,0" VerticalAlignment="Top" Width="65" Grid.Column="1"/>
+                    <TextBox x:Name="tbLastname" TabIndex="4" HorizontalAlignment="Left" Height="23" Margin="457,177,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149" Grid.Column="1"/>
+                    <Label x:Name="lblLastname" Content="Sukunimi:" HorizontalAlignment="Left" Margin="352,177,0,0" VerticalAlignment="Top" Width="65" Grid.Column="1"/>
+                    <Label x:Name="lblCustomerHeader" Content="Lisää asiakas" HorizontalAlignment="Left" Margin="352,62,0,0" VerticalAlignment="Top" Width="254" FontSize="18" Grid.Column="1"/>
+                    <TextBox x:Name="tbStreetAddress" TabIndex="5" HorizontalAlignment="Left" Height="23" Margin="457,205,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149" Grid.Column="1"/>
+                    <Label x:Name="lblStreetAddress" Content="Katuosoite:" HorizontalAlignment="Left" Margin="352,205,0,0" VerticalAlignment="Top" Width="72" Grid.Column="1"/>
+                    <TextBox x:Name="tbPostalCode" TabIndex="6" HorizontalAlignment="Left" Height="23" Margin="457,233,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149" Grid.Column="1"/>
+                    <Label x:Name="lblPostalCode" Content="Postinumero:" HorizontalAlignment="Left" Margin="352,233,0,0" VerticalAlignment="Top" Width="86" Grid.Column="1"/>
+                    <TextBox x:Name="tbCity" TabIndex="7" HorizontalAlignment="Left" Height="23" Margin="457,261,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149" Grid.Column="1"/>
+                    <Label x:Name="lblCity" Content="Postitoimipaikka:" HorizontalAlignment="Left" Margin="352,261,0,0" VerticalAlignment="Top" Width="100" Grid.Column="1"/>
+                    <TextBox x:Name="tbPhonenumber" TabIndex="8" HorizontalAlignment="Left" Height="23" Margin="457,289,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149" Grid.Column="1"/>
+                    <Label x:Name="lblPhonenumber" Content="Puhelin:" HorizontalAlignment="Left" Margin="352,288,0,0" VerticalAlignment="Top" Width="100" Grid.Column="1"/>
+                    <TextBox x:Name="tbEmail" TabIndex="9" HorizontalAlignment="Left" Height="23" Margin="457,317,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149" Grid.Column="1"/>
+                    <Label x:Name="lblEmail" Content="Sähköposti:" HorizontalAlignment="Left" Margin="352,314,0,0" VerticalAlignment="Top" Width="86" Grid.Column="1"/>
+                    <Button x:Name="btnSave" Content="Tallenna" HorizontalAlignment="Left" Margin="352,353,0,0" VerticalAlignment="Top" Width="136" Height="45" Click="btnSave_Click" Grid.Column="1"/>
+                    <Button x:Name="btnDelete" Content="Poista" HorizontalAlignment="Left" Margin="552,353,0,0" VerticalAlignment="Top" Width="54" Height="45" Click="btnDelete_Click" Grid.Column="1"/>
+                    <Button x:Name="btnCancel" Content="Tyhjennä" HorizontalAlignment="Left" Margin="493,353,0,0" VerticalAlignment="Top" Width="54" Height="45" Click="btnCancel_Click" Grid.Column="1"/>
+                    <Label x:Name="lblIdHeader" Content="Id:" HorizontalAlignment="Left" Margin="352,95,0,0" VerticalAlignment="Top" Width="65" Grid.Column="1"/>
+                    <Label x:Name="lblId" Content="" HorizontalAlignment="Left" Margin="457,95,0,0" VerticalAlignment="Top" Width="149" Grid.Column="1"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Tuoterekisteri">
@@ -118,6 +122,8 @@
                     <Button x:Name="btnProductSave" Content="Tallenna" HorizontalAlignment="Left" Margin="491,318,0,0" VerticalAlignment="Top" Width="136" Height="45" Click="btnProductSave_Click"/>
                     <Button x:Name="btnDeleteProduct" Content="Poista" HorizontalAlignment="Left" Margin="691,318,0,0" VerticalAlignment="Top" Width="54" Height="45" Click="btnDeleteProduct_Click"/>
                     <Button x:Name="btnCancelProduct" Content="Tyhjennä" HorizontalAlignment="Left" Margin="632,318,0,0" VerticalAlignment="Top" Width="54" Height="45" Click="btnCancelProduct_Click"/>
+                    <TextBox x:Name="tbProductFilter" HorizontalAlignment="Left" Height="23" Margin="156,34,0,0" TextWrapping="Wrap" Text="" TextChanged="tbProductFilter_TextChanged" VerticalAlignment="Top" Width="120"/>
+                    <Label x:Name="lblProductFitler" Content="Suodata tuotenimellä:" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="141"/>
 
                 </Grid>
             </TabItem>

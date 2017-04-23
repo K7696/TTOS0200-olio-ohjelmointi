@@ -64,13 +64,13 @@ sisältö.
 	<ul class="w3-ul">
 		<li><a href="#general-overview">1. Sovelluksen yleiskuvaus</a></li>
 		<li><a href="#technologies">2. Käyttöympäristö ja käytetyt teknologiat</a></li>
-		<li><a href="#database">3. Tietovarasto</a></li>
-		<li><a href="#structure">4. Ohjelman rakenne</a></li>
-		<li><a href="#screenshots">6. Näyttökaappaukset</a></li>
-		<li><a href="#testing">7. Testaus</a></li>
-		<li><a href="#future">8. Jatkokehitys</a></li>
-		<li><a href="#working-report">9. Työaikaraportti</a></li>
-		<li><a href="#self-evaluating">10. Itsearviointi</a></li>
+		<li><a href="#structure">3. Ohjelman rakenne</a></li>
+		<li><a href="#database">4. Tietovarasto</a></li>
+		<li><a href="#screenshots">5. Näyttökaappaukset</a></li>
+		<li><a href="#testing">6. Testaus</a></li>
+		<li><a href="#future">7. Jatkokehitys</a></li>
+		<li><a href="#working-report">8. Työaikaraportti</a></li>
+		<li><a href="#self-evaluating">9. Itsearviointi</a></li>
 	</ul>
 </div>
 <br /> <br />
@@ -103,8 +103,45 @@ sisältö.
 	</div>
 </div>
 
+<div class="w3-container" id="structure">
+	<h3>3. Ohjelman rakenne</h3>
+	<p>
+		<b>Ohjelman osiot:</b><br />
+		<ul>
+			<li>1. Asiakasrekisteri: Yrityksen asiakkaat</li>
+			<li>2. Tuoterekisteri: Yrityksen tuotteet</li>
+			<li>3. Laskut: Asiakkaille lähetettävät laskut</li>
+		</ul>
+	</p>
+	<p>
+		<b>Luokkakaavio:</b><br />
+		<img src="UML.png" alt="img" />
+	</p>
+	<p>
+		<b>Luokat:</b><br />
+		<ul>
+			<li>Database: Käytetään tietovaraston käsittelyyn (CRUD-toiminnot)</li>
+			<li>Company: Yrityksen omia tietoja varten tehty luokka, mikä käyttää database-luokkaa</li>
+			<li>Address: Osoiteluokka sisältää osoitteeseen liittyviä ominaisuuksia. 
+				Address luokalla on composition-suhde Company ja Customer -luokkiin. Jos Company tai Customer poistetaan, niin osoite poistuu samalla.</li>
+			<li>Person: Luokka sisältää vain henkilöön liittyviä propertyja</li>
+			<li>Customer: Luokka sisältää asiakkaaseen liittyviä ominaisuuksia ja perii Person-luokan. Tämä 
+				luokka hyödyntää Database-luokkaa.
+				</li>
+			<li>Bill: Luokka sisältää laskun ominaisuuksia ja sillä on composition-suhde BillRow-luokkaan,
+				mikä tarkoittaa, että jos Bill poistetaan, niin BillRow poistuu myös.</li>
+			<li>BillRow: Laskun rivi</li>
+			<li>Product: Sisältää tuotteen ominaisuuksia. Luokka käyttää Database-luokkaa.</li>
+			<li>Bills, Customers ja Products -luokat on tehty datagridia varten.</li>
+		</ul>
+	</p>
+	<div class="w3-container">
+		<a href="#content-list">Takaisin sisällysluetteloon...</a>
+	</div>
+</div>
+
 <div class="w3-container" id="database">
-	<h3>3. Tietovarasto</h3>
+	<h3>4. Tietovarasto</h3>
 	<p>
 		Sovelluksen tietovarastona käytetään Microsoft Access-tietokantaa, mikä tulee samalle koneelle asennettuna kuin itse sovellus. 
 		Tietokannaksi valittiin Access, koska ei haluttu lähteä toteuttamaan turhan monimutkaista tietokantahallintaa. Eikä haluttu tallentaa 
@@ -149,19 +186,8 @@ sisältö.
 	</div>
 </div>
 
-<div class="w3-container" id="structure">
-	<h3>4. Ohjelman rakenne</h3>
-	<p>
-		<b>Luokkakaavio:</b><br />
-		<img src="UML.png" alt="img" />
-	</p>
-	<div class="w3-container">
-		<a href="#content-list">Takaisin sisällysluetteloon...</a>
-	</div>
-</div>
-
 <div class="w3-container" id="screenshots">
-	<h3>6. Näyttökaappaukset</h3>
+	<h3>5. Näyttökaappaukset</h3>
 	<p>
 		Ohjelma lataa käynnistyessään tuotteet, asiakkaat, laskut ja omat tiedot tietokannasta.
 	</p>
@@ -210,7 +236,7 @@ sisältö.
 </div>
 
 <div class="w3-container" id="testing">
-	<h3>7. Testaus</h3>
+	<h3>6. Testaus</h3>
 	<p>
 		Testausta on tehty vain käyttöliittymästä savutestaamalla toiminnot. Ei ole mitään kunnollista testausprosessia käyty läpi.
 	</p>
@@ -220,7 +246,7 @@ sisältö.
 </div>
 
 <div class="w3-container" id="future">
-	<h3>8. Jatkokehitys</h3>
+	<h3>7. Jatkokehitys</h3>
 	<p>
 		<b>Puutteita:</b><br />
 		- Laskun tulostustoiminto puuttuu vielä kokonaan.
@@ -264,7 +290,7 @@ sisältö.
 </div>
 
 <div class="w3-container" id="working-report">
-	<h3>9. Työaikaraportti</h3>
+	<h3>8. Työaikaraportti</h3>
 	<p>
 		Toteutin tämän harjoitustyön kokonaan yksin ja siihen meni ainakin 40 tuntia.
 	</p>
@@ -274,7 +300,7 @@ sisältö.
 </div>
 
 <div class="w3-container" id="self-evaluating">
-	<h3>10. Itsearviointi</h3>
+	<h3>9. Itsearviointi</h3>
 	<p>
 	
 	</p>
@@ -287,8 +313,6 @@ sisältö.
 <a href="#begin">Takaisin ylös...</a>
 </div>
 
-
-<!-- Master div end -->
 </div> 
 </body>
 </html>
